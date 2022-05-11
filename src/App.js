@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //Components
 import LandingPage from "./components/LandingPage";
 
+//Styling
+import "./App.css";
+
 function App() {
   return (
     <Router>
