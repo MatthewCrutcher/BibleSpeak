@@ -28,17 +28,16 @@
 
 .input-container-signup input {
   width: 50%;
-  height: 2vw;
+  height: 4vh;
   background-color: rgba(103, 103, 103, 1);
   border: 0;
   border-radius: 5px;
-  font-size: 1.2vw;
+  font-size: 2.5vh;
   color: white;
-  text-align: center;
 }
 .input-container-signup label {
   width: 50%;
-  font-size: 1.3vw;
+  font-size: 2.5vh;
   font-weight: 400;
   margin-top: 3%;
 }
@@ -46,14 +45,21 @@
 .create-password-container {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
+  width: 50%;
   margin-top: 2%;
+  justify-content: space-between;
+}
+.label-input-container {
+  display: flex;
+  flex-direction: column;
 }
 
-.create-password-container label {
-  margin: 0;
-  width: 25%;
+.label-input-container label {
+  align-self: flex-start;
+}
+
+.label-input-container input {
+  width: 20vw;
 }
 
 .input-container-signup button {
@@ -61,12 +67,38 @@
   border: 0;
   color: black;
   margin-top: 3%;
-  width: 10vw;
-  height: auto;
-  padding-top: 0.2%;
-  padding-bottom: 0.2%;
-  font-size: 1.5vw;
-  font-weight: 400;
+  width: 10%;
+  height: fit-content;
+  padding: 0.2% 1%;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+  min-width: 100px;
+}
+
+@media screen and (max-width: 600px) {
+  .signup-page {
+    justify-content: center;
+  }
+
+  #email-input {
+    width: 75%;
+  }
+
+  #email-label {
+    margin-right: 25%;
+  }
+
+  .logo-container-signup {
+    flex-direction: column;
+  }
+
+  .create-password-container {
+    flex-direction: column;
+    width: 75%;
+  }
+
+  .label-input-container input {
+    width: 100%;
+    align-self: center;
+  }
 }

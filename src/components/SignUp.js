@@ -12,17 +12,23 @@ function SignUp() {
           <h2>Bible Speak</h2>
         </div>
         <div className="input-container-signup">
-          <label>Email:</label>
-          <input />
-          <div className="create-password-container">
-            <label>Password:</label>
+          <label id="email-label">Email:</label>
+          <input id="email-input" />
 
-            <input />
-            <label>Password:</label>
-            <input />
+          <div className="create-password-container">
+            <div className="label-input-container">
+              <label>Password:</label>
+              <input />
+            </div>
+            <div className="label-input-container">
+              <label>Password:</label>
+              <input />
+            </div>
           </div>
 
-          <button>Sign Up</button>
+          <button>
+            <h4>Sign-Up</h4>
+          </button>
           <p>
             Don't Have An Account? <a href="#">Sign Up Here</a>
           </p>
