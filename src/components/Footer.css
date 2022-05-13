@@ -32,15 +32,3 @@
   color: rgba(255, 255, 255, 0.75);
   font-weight: 400;
 }
-
-@media screen and (max-width: 600px) {
-  .footer h1 {
-    padding-bottom: 8%;
-  }
-  .footer img {
-    padding-bottom: 8%;
-  }
-  .footer-slogan {
-    padding-bottom: 5%;
-  }
-}

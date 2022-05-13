@@ -63,7 +63,7 @@ body {
   background-color: rgba(255, 246, 215, 1);
 }
 
-.description-container p {
+.description-container h4 {
   padding-top: 5vh;
   margin: 0;
   padding-left: 5vw;
@@ -73,6 +73,9 @@ body {
 }
 
 @media screen and (max-width: 1400px) {
+  .landing-page-redirect h2 {
+    text-align: center;
+  }
   .landing-page-redirect {
     background-image: url(../images/mobile-landing-page-image.png);
     background-repeat: no-repeat;
@@ -125,7 +128,7 @@ body {
   .landing-page-redirect button {
     width: 40%;
   }
-  .description-container p {
+  .description-container h4 {
     padding-top: 5vh;
     margin: 0;
     padding-left: 5vw;
