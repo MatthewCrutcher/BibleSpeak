@@ -3,13 +3,18 @@
 }
 
 h1 {
-  font-size: 6vw;
+  font-size: 6vh;
 }
 
 h2 {
-  font-size: 2vw;
+  font-size: 4vh;
+}
+
+h4 {
+  font-size: 2vh;
+  margin: 3% 0;
 }
 
 p {
-  font-size: 1.2vw;
+  font-size: 1.5vh;
 }

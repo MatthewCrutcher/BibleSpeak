@@ -18,7 +18,7 @@ function LandingPage() {
         </div>
       </div>
       <div className="description-container">
-        <p>
+        <h4>
           Bible Speak is developed to help anyone with questions they may have
           about being a christain, the bible or life in general. It is difficult
           to trust someone’s answer even if they are qouting scripture. It can
@@ -26,7 +26,7 @@ function LandingPage() {
           To solve that, why not just let the bible speak for itself? Here the
           only answer you get IS qouted scripture. However read around that
           scripture to get the full context.{" "}
-        </p>
+        </h4>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-.login-page {
+.signup-page {
   background-image: url(../images/Background.png);
   height: 100vh;
   background-position: center;
@@ -6,27 +6,27 @@
   flex-direction: column;
 }
 
-.logo-container-login {
+.logo-container-signup {
   display: flex;
   align-self: center;
   padding: 0;
 }
 
-.logo-container-login img {
+.logo-container-signup img {
   align-self: center;
 }
 
-.logo-container-login h2 {
+.logo-container-signup h2 {
   align-self: center;
 }
 
-.input-container-login {
+.input-container-signup {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.input-container-login input {
+.input-container-signup input {
   width: 50%;
   height: 4vh;
   background-color: rgba(103, 103, 103, 1);
@@ -35,15 +35,34 @@
   font-size: 2.5vh;
   color: white;
 }
-
-.input-container-login label {
+.input-container-signup label {
   width: 50%;
   font-size: 2.5vh;
   font-weight: 400;
   margin-top: 3%;
 }
 
-.input-container-login button {
+.create-password-container {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  margin-top: 2%;
+  justify-content: space-between;
+}
+.label-input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.label-input-container label {
+  align-self: flex-start;
+}
+
+.label-input-container input {
+  width: 20vw;
+}
+
+.input-container-signup button {
   background-color: rgba(75, 212, 255, 1);
   border: 0;
   color: black;
@@ -51,24 +70,35 @@
   width: 10%;
   height: fit-content;
   padding: 0.2% 1%;
-  min-width: 100px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+  min-width: 100px;
 }
 
 @media screen and (max-width: 600px) {
-  .login-page {
+  .signup-page {
     justify-content: center;
   }
 
-  .logo-container-login {
+  #email-input {
+    width: 75%;
+  }
+
+  #email-label {
+    margin-right: 25%;
+  }
+
+  .logo-container-signup {
     flex-direction: column;
   }
 
-  .input-container-login input {
+  .create-password-container {
+    flex-direction: column;
     width: 75%;
   }
-  .input-container-login label {
-    width: 75%;
+
+  .label-input-container input {
+    width: 100%;
+    align-self: center;
   }
 }
