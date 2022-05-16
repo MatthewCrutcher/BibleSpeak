@@ -2,10 +2,12 @@ import React from "react";
 //Styling
 import "./Feed.css";
 import Line from "../images/Line.png";
+import Navbar from "./Navbar";
 
 function Feed() {
   return (
     <div>
+      <Navbar />
       <div className="feed-page">
         <button className="question-button">
           <h4>Ask a Question</h4>
