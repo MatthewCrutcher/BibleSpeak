@@ -96,7 +96,7 @@ function SignUp() {
             <h4>Sign-Up</h4>
           </button>
           <p>
-            Don't Have An Account? <a href="#">Sign Up Here</a>
+            Already Have An Account? <a href="/login">Login Here</a>
           </p>
           <Error error={error} />
         </div>
