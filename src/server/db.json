@@ -4,21 +4,6 @@
       "id": 1,
       "email": "matthew.crutcher@hotmail.com",
       "password": "123456"
-    },
-    {
-      "email": "example@google.com",
-      "password": "",
-      "id": 2
-    },
-    {
-      "email": "matthew.cer@hotmail.com",
-      "password": "1",
-      "id": 3
-    },
-    {
-      "email": "dare@hotmail.com",
-      "password": "1",
-      "id": 4
     }
   ],
   "post": [
