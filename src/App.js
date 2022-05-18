@@ -6,7 +6,7 @@ import Login from "./components/Login";
 import Footer from "./components/Footer";
 import SignUp from "./components/SignUp";
 import Feed from "./components/Feed";
-
+import Answer from "./components/Answer";
 //Styling
 import "./App.css";
 
@@ -18,6 +18,7 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/feed" element={<Feed />} />
+        <Route exact path="/answer" element={<Answer />} />
       </Routes>
       <Footer />
     </Router>
