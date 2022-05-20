@@ -8,9 +8,45 @@
   ],
   "post": [
     {
-      "text": "This is a post",
-      "userId": 3,
+      "text": "asdasd",
+      "userId": 1,
       "id": 1
+    }
+  ],
+  "answer": [
+    {
+      "scripture": [
+        "jkabhsdhb",
+        "kjhasbdhb"
+      ],
+      "userId": 1,
+      "postId": 2,
+      "id": 1
+    },
+    {
+      "scripture": [
+        "GEN.1.1"
+      ],
+      "userId": 1,
+      "postId": 1,
+      "id": 2
+    },
+    {
+      "scripture": [
+        "GEN.1.4",
+        "GEN.1.8"
+      ],
+      "userId": 1,
+      "postId": 1,
+      "id": 3
+    },
+    {
+      "scripture": [
+        "GEN.10.1"
+      ],
+      "userId": 1,
+      "postId": 1,
+      "id": 4
     }
   ]
 }

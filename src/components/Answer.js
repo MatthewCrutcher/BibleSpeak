@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 //API
 import bibleApi from "./api/bibleApi";
+import answer from "../server/server";
 //https://api.scripture.api.bible/v1/
 import { BIBLE_API_KEY } from "./api/bibleApiKey";
 //Styling
@@ -21,7 +22,12 @@ function Answer() {
   const [chosenVerse, setChosenVerse] = useState(""); //Users chosen verses
   const [finalVerse, setFinalVerse] = useState(""); //Final verse ready to display
   // Array of chosen verses that are ready to be posted as an answer
-  const [chosenAnswers, setChosenAnswers] = useState([]);
+  const [chosenAnswers, setChosenAnswers] = useState({
+    scripture: [],
+    userId: 1, // For logged in user
+    postId: 1,
+    id: 4, // Will be a UUID
+  });
   //Errors
   const [error, setError] = useState("");
 
@@ -156,16 +162,16 @@ function Answer() {
     return array.some((arrayValue) => value === arrayValue);
   }
 
-  const renderAnswer = chosenAnswers.map((val, key) => {
+  const renderAnswer = chosenAnswers.scripture.map((val, key) => {
     return (
       <h4 key={key} className="verse-item">
         {val}
         <img
           className="remove-button"
           onClick={() => {
-            let copyArray = [...chosenAnswers];
+            let copyArray = [...chosenAnswers.scripture];
             copyArray.splice(val, 1);
-            setChosenAnswers(copyArray);
+            setChosenAnswers({ ...chosenAnswers, scripture: copyArray });
           }}
           src={Remove}
           alt="Remove Verse"
@@ -173,6 +179,16 @@ function Answer() {
       </h4>
     );
   });
+
+  const handleSubmit = () => {
+    if (error === "") {
+      answer.post("/answer", chosenAnswers).then((res) => {
+        console.log(res);
+      });
+    } else {
+      setError("You cannot submit nothing...");
+    }
+  };
 
   return (
     <div className="background">
@@ -198,12 +214,14 @@ function Answer() {
           onClick={() => {
             if (finalVerse !== "") {
               setError("");
-              if (checkDuplicate(chosenAnswers, chosenVerse) === true) {
+              if (
+                checkDuplicate(chosenAnswers.scripture, chosenVerse) === true
+              ) {
                 return setError("You Already Added That Verse!");
               } else {
-                let copyArray = [...chosenAnswers];
+                let copyArray = [...chosenAnswers.scripture];
                 copyArray.push(chosenVerse);
-                setChosenAnswers(copyArray);
+                setChosenAnswers({ ...chosenAnswers, scripture: copyArray });
               }
             } else {
               setError("You Must Pick a Book, Verse and Chapter");
@@ -216,7 +234,7 @@ function Answer() {
         <Error error={error} />
         <h4>Your verses</h4>
         <div className="verses-container">{renderAnswer}</div>
-        <button className="submit-button">
+        <button className="submit-button" onClick={handleSubmit}>
           <h4>Submit</h4>
         </button>
       </div>
