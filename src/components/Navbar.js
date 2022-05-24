@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 //Styling
 import dropDown from "../images/navbar-dropdown.png";
 import logo from "../images/Logo IMG.png";
 import "./Navbar.css";
 
 function Navbar() {
+  const navigate = useNavigate();
   const [active, setActive] = useState(false);
   const toggleActive = () => {
     setActive(!active);
@@ -27,13 +29,13 @@ function Navbar() {
       <div className={active ? "navbarLinks active" : "navbarLinks"}>
         <ul>
           <li>
-            <a href="/">Logout</a>
+            <a onClick={() => navigate("/feed")}>Feed</a>
           </li>
           <li>
-            <a href="/">Logout</a>
+            <a href="/">Profile</a>
           </li>
           <li>
-            <a href="/">Logout</a>
+            <a onClick={() => navigate("/login")}>Logout</a>
           </li>
         </ul>
       </div>

@@ -71,6 +71,10 @@
   color: white;
 }
 
+.navbarLinks a:hover {
+  cursor: pointer;
+}
+
 .navbarLinks li:hover {
   background-color: rgba(185, 185, 185, 0.438);
 }

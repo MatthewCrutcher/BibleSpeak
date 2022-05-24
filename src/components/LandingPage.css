@@ -59,6 +59,11 @@ body {
   border-radius: 10px;
 }
 
+.landing-page-redirect button:hover {
+  cursor: pointer;
+  background-color: rgb(11, 158, 202);
+}
+
 .description-container {
   background-color: rgba(255, 246, 215, 1);
 }

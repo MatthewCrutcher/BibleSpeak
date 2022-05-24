@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 //API
 import bibleApi from "./api/bibleApi";
 import answer from "../server/server";
@@ -26,7 +28,7 @@ function Answer() {
     scripture: [],
     userId: 1, // For logged in user
     postId: 1,
-    id: 4, // Will be a UUID
+    id: uuidv4(), // Will be a UUID
   });
   //Errors
   const [error, setError] = useState("");
