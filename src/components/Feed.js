@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 //Styling
 import "./Feed.css";
 import Line from "../images/Line.png";
@@ -10,8 +12,13 @@ import post from "../server/server";
 import answer from "../server/server";
 
 function Feed() {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [question, setQuestion] = useState({ text: "", userId: 0 });
+  const [question, setQuestion] = useState({
+    text: "",
+    userId: 0,
+    id: uuidv4(),
+  });
   const [postInDB, setPostInDB] = useState([]);
   const [answers, setAnswers] = useState([]);
   //Using a dummy logged in ID for now
@@ -39,18 +46,29 @@ function Feed() {
   }, []);
 
   const mapPost = postInDB.map((val) => {
-    let combineAnswers = [];
+    let combineAnswers = {
+      answer: [],
+      userId: "",
+    };
     answers.map((value) => {
       if (val.id === value.postId) {
-        value.scripture.map((item) => {
-          combineAnswers.push(item);
-        });
+        //return (combineAnswers = {
+        //  answer: value.scripture,
+        //  userId: value.id,
+        //});
+        //value.scripture.map((item) => {
+        //  return (combineAnswers = {
+        //    answer: item,
+        //    userId: value.id,
+        //  });
+        //});
+        //console.log(combineAnswers);
       }
     });
 
-    const displayAnswers = combineAnswers.map((val) => {
-      return <div>{val}</div>;
-    });
+    // const display = combinedAnswers.map((val) => {
+    //   console.log("AIJSDIJNASD");
+    // });
 
     return (
       <>
@@ -73,7 +91,7 @@ function Feed() {
               onClick={() => handleDelete(val.id)}
             />
           </div>
-          <button className="answer-button">
+          <button className="answer-button" onClick={() => navigate("/answer")}>
             <h4>Answer</h4>
           </button>
         </div>
@@ -81,7 +99,6 @@ function Feed() {
           <h3>Answers:</h3>
           <div className="post-text-container">
             <p>ANSWERS HERE</p>
-            {displayAnswers}
           </div>
         </div>
       </>

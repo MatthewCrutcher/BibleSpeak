@@ -4,49 +4,62 @@
       "id": 1,
       "email": "matthew.crutcher@hotmail.com",
       "password": "123456"
+    },
+    {
+      "email": "her@hotmail.com",
+      "password": "1",
+      "id": "6028bad5-84f9-4d82-9e87-88876adddaed"
     }
   ],
   "post": [
     {
-      "text": "asdasd",
+      "text": "asdawda",
       "userId": 1,
       "id": 1
     }
   ],
   "answer": [
     {
-      "scripture": [
-        "jkabhsdhb",
-        "kjhasbdhb"
-      ],
+      "scripture": ["jkabhsdhb", "kjhasbdhb"],
       "userId": 1,
       "postId": 2,
       "id": 1
     },
     {
-      "scripture": [
-        "GEN.1.1"
-      ],
+      "scripture": ["GEN.1.1"],
       "userId": 1,
       "postId": 1,
       "id": 2
     },
     {
-      "scripture": [
-        "GEN.1.4",
-        "GEN.1.8"
-      ],
+      "scripture": ["GEN.1.4", "GEN.1.8"],
       "userId": 1,
       "postId": 1,
       "id": 3
     },
     {
-      "scripture": [
-        "GEN.10.1"
-      ],
+      "scripture": ["GEN.10.1"],
       "userId": 1,
       "postId": 1,
       "id": 4
+    },
+    {
+      "scripture": ["GEN.1.2"],
+      "userId": 1,
+      "postId": 1,
+      "id": "777c504d-ab72-4747-ac1f-6ad4a8e508a9"
+    },
+    {
+      "scripture": ["EXO.1.2"],
+      "userId": 1,
+      "postId": 1,
+      "id": "e6123518-2359-4e58-8528-8711ead82b09"
+    },
+    {
+      "scripture": ["EXO.1.2", "LEV.1.2"],
+      "userId": 1,
+      "postId": 1,
+      "id": "b44ad750-461f-4892-999d-36e423c22b79"
     }
   ]
 }

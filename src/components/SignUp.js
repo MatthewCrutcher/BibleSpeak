@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 //Styling
 import "./SignUp.css";
 import logo from "../images/Logo IMG.png";
@@ -10,6 +11,7 @@ function SignUp() {
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
+    id: uuidv4(),
   });
   const [existingEmails, setExistingEmails] = useState([]);
   const [error, setError] = useState("");

@@ -56,6 +56,11 @@
   border-radius: 10px;
 }
 
+.input-container-login button:hover {
+  cursor: pointer;
+  background-color: rgb(11, 158, 202);
+}
+
 @media screen and (max-width: 600px) {
   .login-page {
     justify-content: center;

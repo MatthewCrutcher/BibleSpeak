@@ -1,9 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 //Styling
 import "./LandingPage.css";
 import logo from "../images/Logo IMG.png";
 
 function LandingPage() {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="landing-page-redirect">
@@ -12,8 +14,8 @@ function LandingPage() {
           <h1>Bible Speak</h1>
           <h2>Let God's Word Answer Your Questions</h2>
           <div className="button-container">
-            <button>Login</button>
-            <button>Sign Up</button>
+            <button onClick={() => navigate("/login")}>Login</button>
+            <button onClick={() => navigate("/signup")}>Sign Up</button>
           </div>
         </div>
       </div>
