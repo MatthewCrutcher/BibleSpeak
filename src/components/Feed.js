@@ -46,29 +46,26 @@ function Feed() {
   }, []);
 
   const mapPost = postInDB.map((val) => {
-    let combineAnswers = {
-      answer: [],
-      userId: "",
-    };
-    answers.map((value) => {
+    const mappingAnswers = answers.map((value) => {
       if (val.id === value.postId) {
-        //return (combineAnswers = {
-        //  answer: value.scripture,
-        //  userId: value.id,
-        //});
-        //value.scripture.map((item) => {
-        //  return (combineAnswers = {
-        //    answer: item,
-        //    userId: value.id,
-        //  });
-        //});
-        //console.log(combineAnswers);
+        const mappingScripture = value.scripture.map((scrip) => {
+          return <div>{scrip}</div>;
+        });
+        return (
+          <div className="mapped-answers-container">
+            {mappingScripture}{" "}
+            <img
+              src={Remove}
+              alt="Remove Answer"
+              className={
+                loggedIn === value.userId ? "remove-answer" : "remove-post-none"
+              }
+              onClick={() => handleDelete(value.id, "answer")}
+            />
+          </div>
+        );
       }
     });
-
-    // const display = combinedAnswers.map((val) => {
-    //   console.log("AIJSDIJNASD");
-    // });
 
     return (
       <>
@@ -88,7 +85,7 @@ function Feed() {
               className={
                 loggedIn === val.userId ? "remove-post" : "remove-post-none"
               }
-              onClick={() => handleDelete(val.id)}
+              onClick={() => handleDelete(val.id, "post")}
             />
           </div>
           <button className="answer-button" onClick={() => navigate("/answer")}>
@@ -97,17 +94,15 @@ function Feed() {
         </div>
         <div className="post-container">
           <h3>Answers:</h3>
-          <div className="post-text-container">
-            <p>ANSWERS HERE</p>
-          </div>
+          <div className="mapped-answers-outer-container">{mappingAnswers}</div>
         </div>
       </>
     );
   });
 
-  const handleDelete = (id) => {
-    post.delete(`/post/${id}`).then((res) => {
-      console.log(id);
+  const handleDelete = (id, url) => {
+    post.delete(`/${url}/${id}`).then((res) => {
+      console.log(res);
     });
 
     return null;
