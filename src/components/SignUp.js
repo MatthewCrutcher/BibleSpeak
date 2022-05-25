@@ -59,7 +59,7 @@ function SignUp() {
           <h2>Bible Speak</h2>
         </div>
         <div className="input-container-signup">
-          <label id="email-label">Email:</label>
+          <label className="label-email">Email:</label>
           <input
             id="email-input"
             type="email"

@@ -36,6 +36,12 @@
   color: white;
 }
 .input-container-signup label {
+  font-size: 2.5vh;
+  font-weight: 400;
+  margin-top: 3%;
+}
+
+.label-email {
   width: 50%;
   font-size: 2.5vh;
   font-weight: 400;
@@ -80,7 +86,7 @@
   background-color: rgb(11, 158, 202);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1000px) {
   .signup-page {
     justify-content: center;
   }
@@ -89,7 +95,7 @@
     width: 75%;
   }
 
-  #email-label {
+  .label-email {
     margin-right: 25%;
   }
 
