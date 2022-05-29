@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { LoggedInContext } from "../App";
 //Styling
 import "./Feed.css";
 import Line from "../images/Line.png";
@@ -22,7 +23,8 @@ function Feed() {
   const [postInDB, setPostInDB] = useState([]);
   const [answers, setAnswers] = useState([]);
   //Using a dummy logged in ID for now
-  const [loggedIn, setLoggedIn] = useState(1);
+  //const [loggedIn, setLoggedIn] = useState(1);
+  const { loggedIn, setLoggedIn } = useContext(LoggedInContext);
 
   useEffect(() => {
     const postApiCall = async () => {
@@ -37,6 +39,7 @@ function Feed() {
       try {
         const res = await answer.get("/answer");
         setAnswers(res.data);
+        console.log(loggedIn);
       } catch (error) {
         console.log(error);
       }
@@ -123,6 +126,7 @@ function Feed() {
   return (
     <div>
       <Navbar />
+      {loggedIn}
       <div className="feed-page">
         <form className="question-container" onSubmit={handleQuestion}>
           <h4>What Is Your Question?</h4>

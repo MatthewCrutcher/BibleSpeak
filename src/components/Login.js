@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { LoggedInContext } from "../App";
 //Styling
 import "./Login.css";
 import logo from "../images/Logo IMG.png";
@@ -15,6 +16,9 @@ function Login() {
     email: "",
     password: "",
   });
+  const [IDMatches, setIDMatches] = useState(0);
+
+  const { loggedIn, setLoggedIn } = useContext(LoggedInContext);
 
   useEffect(() => {
     const userApiCall = async () => {
@@ -22,7 +26,8 @@ function Login() {
         const res = await users.get("/users");
         const response = res.data;
         setExistingUsers(response);
-        console.log(response);
+
+        console.log(loggedIn);
       } catch (error) {
         console.log(error);
       }
@@ -36,6 +41,7 @@ function Login() {
       if (formValues.email === val.email) {
         setEmailMatches(val.email);
         setPasswordInDB(val.password);
+        setIDMatches(val.id);
       }
       return null;
     });
@@ -43,7 +49,7 @@ function Login() {
       event.preventDefault();
       setError("Email or Password Are Incorrect!");
     } else {
-      // Relocate
+      window.location.href = "http://localhost:3000/feed";
     }
   };
 

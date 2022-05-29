@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-
+import { LoggedInContext } from "../App";
 //API
 import bibleApi from "./api/bibleApi";
 import answer from "../server/server";
@@ -32,6 +32,9 @@ function Answer() {
   });
   //Errors
   const [error, setError] = useState("");
+  const [IDMatches, setIDMatches] = useState(1);
+
+  const { loggedIn, setLoggedIn } = useContext(LoggedInContext);
 
   useEffect(() => {
     const bibleBookApiCall = async () => {
@@ -196,6 +199,13 @@ function Answer() {
     <div className="background">
       <Navbar />
       <div className="answer-container">
+        <button
+          onClick={() => {
+            setLoggedIn(IDMatches);
+          }}
+        >
+          CLICK
+        </button>
         <div className="list-label-container">
           <h4 className="list-label">BOOKS</h4>
           <div className="list-container">{renderBooks}</div>
