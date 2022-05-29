@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import SignUp from "./components/SignUp";
 import Feed from "./components/Feed";
 import Answer from "./components/Answer";
+import Profile from "./components/Profile";
 //Styling
 import "./App.css";
 
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/feed" element={<Feed />} />
           <Route exact path="/answer" element={<Answer />} />
+          <Route exact path="/profile" element={<Profile />} />
         </Routes>
         <Footer />
       </LoggedInContext.Provider>
