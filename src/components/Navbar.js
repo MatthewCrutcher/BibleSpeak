@@ -32,7 +32,7 @@ function Navbar() {
             <a onClick={() => navigate("/feed")}>Feed</a>
           </li>
           <li>
-            <a href="/">Profile</a>
+            <a onClick={() => navigate("/profile")}>Profile</a>
           </li>
           <li>
             <a onClick={() => navigate("/login")}>Logout</a>

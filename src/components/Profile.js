@@ -45,16 +45,18 @@ function Profile() {
     if (val.userId === loggedIn) {
       const mappingAnswers = answerInDB.map((value) => {
         if (val.id === value.postId) {
-          const mappingScripture = value.scripture.map((scrip) => {
-            return <div>{scrip}</div>;
+          const mappingScripture = value.scripture.map((scrip, key) => {
+            return <div key={key}>{scrip}</div>;
           });
           return (
-            <div className="mapped-answers-container">{mappingScripture}</div>
+            <div className="mapped-answers-container" key={value.id}>
+              {mappingScripture}
+            </div>
           );
         }
       });
       return (
-        <div className="mapping-outer-container">
+        <div className="mapping-outer-container" key={val.id}>
           <img className="line-seperator" src={Line} alt="Line Seperator" />
           <div className="post-container">
             <h3>Question:</h3>
@@ -94,7 +96,14 @@ function Profile() {
     <div>
       <Navbar />
       <div className="profile-container">
-        <div className="button-container">
+        <h2>Questions You Have Asked</h2>
+
+        {mapPost}
+      </div>
+    </div>
+  );
+}
+/* <div className="button-container">
           <button
             className={
               selection === false
@@ -122,21 +131,5 @@ function Profile() {
               ? "profile-question-active"
               : "profile-question-none"
           }
-        >
-          Questions You Have Asked
-        </h2>
-        <h2
-          className={
-            selection === true ? "profile-answer-active" : "profile-answer-none"
-          }
-        >
-          Answers You Have Given
-        </h2>
-
-        {mapPost}
-      </div>
-    </div>
-  );
-}
-
+        > */
 export default Profile;
