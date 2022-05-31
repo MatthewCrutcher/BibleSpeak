@@ -17,6 +17,7 @@ function Login() {
     password: "",
   });
   const [IDMatches, setIDMatches] = useState(0);
+  const [user, setUser] = useState("");
 
   const { loggedIn, setLoggedIn } = useContext(LoggedInContext);
 
@@ -49,7 +50,9 @@ function Login() {
       event.preventDefault();
       setError("Email or Password Are Incorrect!");
     } else {
-      window.location.href = "http://localhost:3000/feed";
+      localStorage.setItem("user", IDMatches);
+      console.log(`The user logged in is${IDMatches}`);
+      // window.location.href = "http://localhost:3000/feed";
     }
   };
 

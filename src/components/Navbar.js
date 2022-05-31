@@ -11,6 +11,10 @@ function Navbar() {
   const toggleActive = () => {
     setActive(!active);
   };
+  const handleLogout = () => {
+    navigate("/login");
+    localStorage.setItem("user", null);
+  };
   return (
     <nav className="navbar-container">
       <a className="logo-link" href="/">
@@ -35,7 +39,7 @@ function Navbar() {
             <a onClick={() => navigate("/profile")}>Profile</a>
           </li>
           <li>
-            <a onClick={() => navigate("/login")}>Logout</a>
+            <a onClick={() => handleLogout()}>Logout</a>
           </li>
         </ul>
       </div>

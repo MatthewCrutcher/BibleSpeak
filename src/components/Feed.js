@@ -23,8 +23,8 @@ function Feed() {
   const [postInDB, setPostInDB] = useState([]);
   const [answers, setAnswers] = useState([]);
   //Using a dummy logged in ID for now
-  //const [loggedIn, setLoggedIn] = useState(1);
-  const { loggedIn, setLoggedIn } = useContext(LoggedInContext);
+  const [loggedIn, setLoggedIn] = useState("");
+  //const { loggedIn, setLoggedIn } = useContext(LoggedInContext);
 
   useEffect(() => {
     const postApiCall = async () => {
@@ -44,9 +44,21 @@ function Feed() {
         console.log(error);
       }
     };
+    const getLoggedInUser = async () => {
+      try {
+        const res = await localStorage.getItem("user");
+        setLoggedIn(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     postApiCall();
     answersApiCall();
+    getLoggedInUser();
   }, []);
+
+  const user = localStorage.getItem("user");
 
   const mapPost = postInDB.map((val) => {
     const mappingAnswers = answers.map((value) => {
@@ -126,7 +138,7 @@ function Feed() {
   return (
     <div>
       <Navbar />
-      {loggedIn}
+      {user}
       <div className="feed-page">
         <form className="question-container" onSubmit={handleQuestion}>
           <h4>What Is Your Question?</h4>
