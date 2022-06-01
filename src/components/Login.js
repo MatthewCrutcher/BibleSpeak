@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { LoggedInContext } from "../App";
+import React, { useState, useEffect } from "react";
 //Styling
 import "./Login.css";
 import logo from "../images/Logo IMG.png";
@@ -17,9 +16,6 @@ function Login() {
     password: "",
   });
   const [IDMatches, setIDMatches] = useState(0);
-  const [user, setUser] = useState("");
-
-  const { loggedIn, setLoggedIn } = useContext(LoggedInContext);
 
   useEffect(() => {
     const userApiCall = async () => {
@@ -27,8 +23,6 @@ function Login() {
         const res = await users.get("/users");
         const response = res.data;
         setExistingUsers(response);
-
-        console.log(loggedIn);
       } catch (error) {
         console.log(error);
       }
@@ -52,7 +46,7 @@ function Login() {
     } else {
       localStorage.setItem("user", IDMatches);
       console.log(`The user logged in is${IDMatches}`);
-      // window.location.href = "http://localhost:3000/feed";
+      window.location.href = "http://localhost:3000/feed";
     }
   };
 

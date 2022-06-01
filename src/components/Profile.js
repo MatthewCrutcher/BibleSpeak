@@ -13,7 +13,7 @@ function Profile() {
   const [selection, setSelection] = useState(false);
   const [postInDB, setPostInDB] = useState([]);
   const [answerInDB, setAnswerInDB] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(1);
+  const [loggedIn, setLoggedIn] = useState("");
 
   useEffect(() => {
     const postApiCall = async () => {
@@ -33,14 +33,18 @@ function Profile() {
         console.log(error);
       }
     };
+    const getLoggedInUser = async () => {
+      try {
+        const res = await localStorage.getItem("user");
+        setLoggedIn(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getLoggedInUser();
     postApiCall();
     answerApiCall();
   }, []);
-
-  // const mapAnswers = answerInDB.map((val) => {
-  //   if
-  // })
-
   const mapPost = postInDB.map((val) => {
     if (val.userId === loggedIn) {
       const mappingAnswers = answerInDB.map((value) => {
@@ -85,6 +89,7 @@ function Profile() {
             <h3>Answers:</h3>
             <div className="mapped-answers-outer-container">
               {mappingAnswers}
+              {loggedIn}
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //Styling
 import dropDown from "../images/navbar-dropdown.png";
@@ -8,6 +8,7 @@ import "./Navbar.css";
 function Navbar() {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(null);
   const toggleActive = () => {
     setActive(!active);
   };
@@ -15,6 +16,19 @@ function Navbar() {
     navigate("/login");
     localStorage.setItem("user", null);
   };
+
+  useEffect(() => {
+    const getLoggedInUser = async () => {
+      try {
+        const res = await localStorage.getItem("user");
+        setLoggedIn(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getLoggedInUser();
+  }, []);
+
   return (
     <nav className="navbar-container">
       <a className="logo-link" href="/">
@@ -39,7 +53,11 @@ function Navbar() {
             <a onClick={() => navigate("/profile")}>Profile</a>
           </li>
           <li>
-            <a onClick={() => handleLogout()}>Logout</a>
+            {loggedIn === "null" ? (
+              <a onClick={() => handleLogout()}>Login</a>
+            ) : (
+              <a onClick={() => handleLogout()}>Logout</a>
+            )}
           </li>
         </ul>
       </div>
