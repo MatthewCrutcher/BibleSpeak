@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //Components
 import LandingPage from "./components/LandingPage";
@@ -8,17 +8,15 @@ import SignUp from "./components/SignUp";
 import Feed from "./components/Feed";
 import Answer from "./components/Answer";
 import Profile from "./components/Profile";
+import { QuestionContext } from "./components/QuestionContext";
 //Styling
 import "./App.css";
 
-export const LoggedInContext = createContext(null);
-
 function App() {
-  const [loggedIn, setLoggedIn] = useState(0);
-
+  const [questionID, setQuestionID] = useState("");
   return (
     <Router>
-      <LoggedInContext.Provider value={{ loggedIn, setLoggedIn }}>
+      <QuestionContext.Provider value={{ questionID, setQuestionID }}>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/login" element={<Login />} />
@@ -28,7 +26,7 @@ function App() {
           <Route exact path="/profile" element={<Profile />} />
         </Routes>
         <Footer />
-      </LoggedInContext.Provider>
+      </QuestionContext.Provider>
     </Router>
   );
 }

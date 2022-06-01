@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
-import { LoggedInContext } from "../App";
+import { QuestionContext } from "./QuestionContext";
+
 //Styling
 import "./Feed.css";
 import Line from "../images/Line.png";
 import Navbar from "./Navbar";
 import Error from "./Error";
 import Remove from "../images/remove.png";
+import Answer from "../components/Answer";
 //Server / API
 import post from "../server/server";
 import answer from "../server/server";
@@ -22,9 +24,8 @@ function Feed() {
   });
   const [postInDB, setPostInDB] = useState([]);
   const [answers, setAnswers] = useState([]);
-  //Using a dummy logged in ID for now
-  //const [loggedIn, setLoggedIn] = useState(1);
-  const { loggedIn, setLoggedIn } = useContext(LoggedInContext);
+  const [loggedIn, setLoggedIn] = useState(null);
+  const [loginError, setLoginError] = useState(false);
 
   useEffect(() => {
     const postApiCall = async () => {
@@ -39,14 +40,24 @@ function Feed() {
       try {
         const res = await answer.get("/answer");
         setAnswers(res.data);
-        console.log(loggedIn);
       } catch (error) {
         console.log(error);
       }
     };
+    const getLoggedInUser = async () => {
+      try {
+        const res = await localStorage.getItem("user");
+        setLoggedIn(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     postApiCall();
     answersApiCall();
+    getLoggedInUser();
   }, []);
+  const { questionID, setQuestionID } = useContext(QuestionContext);
 
   const mapPost = postInDB.map((val) => {
     const mappingAnswers = answers.map((value) => {
@@ -70,6 +81,11 @@ function Feed() {
       }
     });
 
+    const handleAnswer = () => {
+      setQuestionID(val.id);
+      navigate("/answer");
+    };
+
     return (
       <>
         {" "}
@@ -91,7 +107,7 @@ function Feed() {
               onClick={() => handleDelete(val.id, "post")}
             />
           </div>
-          <button className="answer-button" onClick={() => navigate("/answer")}>
+          <button className="answer-button" onClick={() => handleAnswer()}>
             <h4>Answer</h4>
           </button>
         </div>
@@ -115,6 +131,8 @@ function Feed() {
     event.preventDefault();
     if (question === "") {
       setError("Question Cannot Be Empty!");
+    } else if (loggedIn === "null") {
+      setError("You must login to post something!");
     } else {
       post.post("/post", question).then((res) => {
         console.log(res);
@@ -126,7 +144,7 @@ function Feed() {
   return (
     <div>
       <Navbar />
-      {loggedIn}
+      {questionID}
       <div className="feed-page">
         <form className="question-container" onSubmit={handleQuestion}>
           <h4>What Is Your Question?</h4>

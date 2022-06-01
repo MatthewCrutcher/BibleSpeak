@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { LoggedInContext } from "../App";
+import { QuestionContext } from "./QuestionContext";
+
 //API
 import bibleApi from "./api/bibleApi";
 import answer from "../server/server";
@@ -15,7 +16,7 @@ import Line from "../images/Line.png";
 import Remove from "../images/remove.png";
 //KJV ID de4e12af7f28f599-02
 
-function Answer() {
+function Answer(props) {
   const [bibleBooks, setBibleBooks] = useState([]); //Get ALL books
   const [chosenBook, setChosenBook] = useState(""); //Users chosen book
   const [chapters, setChapters] = useState([]); //Get ALL chapters from ^^
@@ -27,14 +28,15 @@ function Answer() {
   const [chosenAnswers, setChosenAnswers] = useState({
     scripture: [],
     userId: 1, // For logged in user
-    postId: 1,
+    postId: null,
     id: uuidv4(), // Will be a UUID
   });
   //Errors
   const [error, setError] = useState("");
   const [IDMatches, setIDMatches] = useState(1);
+  const [loggedIn, setLoggedIn] = useState(null);
 
-  const { loggedIn, setLoggedIn } = useContext(LoggedInContext);
+  const { questionID, setQuestionID } = useContext(QuestionContext);
 
   useEffect(() => {
     const bibleBookApiCall = async () => {
@@ -109,10 +111,27 @@ function Answer() {
         }
       }
     };
+    const getLoggedInUser = async () => {
+      try {
+        const res = await localStorage.getItem("user");
+        setLoggedIn(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const setQuestionID = () => {
+      try {
+        setChosenAnswers({ ...chosenAnswers, postId: questionID });
+      } catch (error) {
+        console.log(error);
+      }
+    };
     finalApiCall();
     bibleVerseApiCall();
     bibleChapterApiCall();
     bibleBookApiCall();
+    getLoggedInUser();
+    setQuestionID();
   }, [chosenBook, chosenChapter, chosenVerse]);
 
   const renderBooks = bibleBooks.map((val) => {
@@ -195,63 +214,67 @@ function Answer() {
     }
   };
 
-  return (
-    <div className="background">
-      <Navbar />
-      <div className="answer-container">
-        <button
-          onClick={() => {
-            setLoggedIn(IDMatches);
-          }}
-        >
-          CLICK
-        </button>
-        <div className="list-label-container">
-          <h4 className="list-label">BOOKS</h4>
-          <div className="list-container">{renderBooks}</div>
-        </div>
-        <div>
-          <h4 className="list-label">CHAPTERS</h4>
-          <div className="list-container">{renderChapters}</div>
-        </div>
-        <div>
-          <h4 className="list-label">VERSES</h4>
-          <div className="list-container">{renderVerses}</div>
-        </div>
+  if (loggedIn === "null") {
+    return (
+      <div className="background">
+        <Navbar />
+
+        <h4 className="error-label">You must login to answer any questions</h4>
       </div>
-      <div className="selected-verse">
-        <h3>You selected:</h3>
-        <h4 className="final-verse">{finalVerse}</h4>
-        <button
-          onClick={() => {
-            if (finalVerse !== "") {
-              setError("");
-              if (
-                checkDuplicate(chosenAnswers.scripture, chosenVerse) === true
-              ) {
-                return setError("You Already Added That Verse!");
+    );
+  } else {
+    return (
+      <div className="background">
+        <Navbar />
+
+        <div className="answer-container">
+          <div className="list-label-container">
+            <h4 className="list-label">BOOKS</h4>
+            <div className="list-container">{renderBooks}</div>
+          </div>
+          <div>
+            <h4 className="list-label">CHAPTERS</h4>
+            <div className="list-container">{renderChapters}</div>
+          </div>
+          <div>
+            <h4 className="list-label">VERSES</h4>
+            <div className="list-container">{renderVerses}</div>
+          </div>
+        </div>
+        <div className="selected-verse">
+          <h3>You selected:</h3>
+          <h4 className="final-verse">{finalVerse}</h4>
+          <button
+            onClick={() => {
+              if (finalVerse !== "") {
+                setError("");
+                if (
+                  checkDuplicate(chosenAnswers.scripture, chosenVerse) === true
+                ) {
+                  return setError("You Already Added That Verse!");
+                } else {
+                  let copyArray = [...chosenAnswers.scripture];
+                  copyArray.push(chosenVerse);
+                  setChosenAnswers({ ...chosenAnswers, scripture: copyArray });
+                }
               } else {
-                let copyArray = [...chosenAnswers.scripture];
-                copyArray.push(chosenVerse);
-                setChosenAnswers({ ...chosenAnswers, scripture: copyArray });
+                setError("You Must Pick a Book, Verse and Chapter");
               }
-            } else {
-              setError("You Must Pick a Book, Verse and Chapter");
-            }
-          }}
-          className="add-verse-button"
-        >
-          <h4>Add Verse</h4>
-        </button>
-        <Error error={error} />
-        <h4>Your verses</h4>
-        <div className="verses-container">{renderAnswer}</div>
-        <button className="submit-button" onClick={handleSubmit}>
-          <h4>Submit</h4>
-        </button>
+            }}
+            className="add-verse-button"
+          >
+            <h4>Add Verse</h4>
+          </button>
+          <Error error={error} />
+          <h4>Your verses</h4>
+          <div className="verses-container">{renderAnswer}</div>
+          <button className="submit-button" onClick={handleSubmit}>
+            <h4>Submit</h4>
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Answer;
