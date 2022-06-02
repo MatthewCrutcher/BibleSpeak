@@ -111,6 +111,18 @@
   width: 100%;
 }
 
+.error-label-profile {
+  background-color: rgba(255, 0, 0, 0.5);
+  height: fit-content;
+  width: 50vw;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  text-align: center;
+  justify-content: center;
+  padding: 2%;
+}
+
 @media screen and (max-width: 800px) {
   .button-container {
     flex-direction: column;

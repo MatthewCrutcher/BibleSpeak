@@ -123,7 +123,7 @@
   flex-wrap: wrap;
   margin-bottom: 2%;
 }
-.error-label {
+.error-label-answer {
   background-color: rgba(255, 0, 0, 0.5);
   height: fit-content;
   width: 50vw;
