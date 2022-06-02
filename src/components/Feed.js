@@ -129,13 +129,13 @@ function Feed() {
 
   const handleQuestion = (event) => {
     event.preventDefault();
-    if (question === "") {
+    if (question.text === "") {
       setError("Question Cannot Be Empty!");
+      event.preventDefault();
     } else if (loggedIn === "null") {
       setError("You must login to post something!");
     } else {
       post.post("/post", question).then((res) => {
-        console.log(res);
         window.location.reload();
       });
     }
@@ -144,7 +144,6 @@ function Feed() {
   return (
     <div>
       <Navbar />
-      {questionID}
       <div className="feed-page">
         <form className="question-container" onSubmit={handleQuestion}>
           <h4>What Is Your Question?</h4>
@@ -160,7 +159,7 @@ function Feed() {
             }}
           />
           <Error error={error} />
-          <button className="question-button">
+          <button className="question-button" onClick={handleQuestion}>
             <h4>Post</h4>
           </button>
         </form>

@@ -13,7 +13,7 @@ function Profile() {
   const [selection, setSelection] = useState(false);
   const [postInDB, setPostInDB] = useState([]);
   const [answerInDB, setAnswerInDB] = useState([]);
-  const [loggedIn, setLoggedIn] = useState("");
+  const [loggedIn, setLoggedIn] = useState(null);
 
   useEffect(() => {
     const postApiCall = async () => {
@@ -41,6 +41,7 @@ function Profile() {
         console.log(error);
       }
     };
+
     getLoggedInUser();
     postApiCall();
     answerApiCall();
@@ -96,18 +97,31 @@ function Profile() {
       );
     }
   });
-
-  return (
-    <div>
-      <Navbar />
-      <div className="profile-container">
-        <h2>Questions You Have Asked</h2>
-
-        {mapPost}
+  if (loggedIn === "null") {
+    return (
+      <div>
+        <Navbar />
+        <div className="profile-container">
+          <h4 className="error-label-profile">
+            You must be logged in to view your profile
+          </h4>
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <Navbar />
+        <div className="profile-container">
+          <h2>Questions You Have Asked</h2>
+
+          {mapPost}
+        </div>
+      </div>
+    );
+  }
 }
+
 /* <div className="button-container">
           <button
             className={

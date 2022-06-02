@@ -9,14 +9,19 @@
       "email": "her@hotmail.com",
       "password": "1",
       "id": "6028bad5-84f9-4d82-9e87-88876adddaed"
+    },
+    {
+      "email": "hello@example.com",
+      "password": "1",
+      "id": "639140a4-31d4-411a-9ee6-2d2f0fd78906"
+    },
+    {
+      "email": "bye@hotmail.com",
+      "password": "1",
+      "id": "d87a259d-99d5-4ad0-b6d9-b894418440d5"
     }
   ],
   "post": [
-    {
-      "text": "Question",
-      "userId": "1",
-      "id": "e10109c1-faee-490b-8039-901b89885e13"
-    },
     {
       "text": "rgDGdfsg",
       "userId": 1,
@@ -100,6 +105,38 @@
       "userId": 1,
       "postId": "1a698f3b-e60c-47cf-ade6-c978b024f69e",
       "id": "7d548421-ab28-422c-b956-b18e7471cf8d"
+    },
+    {
+      "scripture": [
+        "GEN.1.1"
+      ],
+      "userId": 1,
+      "postId": "1a698f3b-e60c-47cf-ade6-c978b024f69e",
+      "id": "e3852a6f-8ecd-49c1-a2e3-6bf84b6e7bdb"
+    },
+    {
+      "scripture": [
+        "EXO.1.2"
+      ],
+      "userId": 1,
+      "postId": "e10109c1-faee-490b-8039-901b89885e13",
+      "id": "cb280c7c-e8cc-41be-b057-8bc2226b3570"
+    },
+    {
+      "scripture": [
+        "LEV.1.2"
+      ],
+      "userId": 1,
+      "postId": "1a698f3b-e60c-47cf-ade6-c978b024f69e",
+      "id": "70f66c19-29fc-4858-8183-b54658800b3c"
+    },
+    {
+      "scripture": [
+        "EXO.2.1"
+      ],
+      "userId": 1,
+      "postId": "47e42303-7964-4d6c-8aa9-92e43814c633",
+      "id": "8811aa01-bf90-4b36-aa76-bf5c5990d205"
     }
   ]
 }

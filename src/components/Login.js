@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 //Styling
 import "./Login.css";
 import logo from "../images/Logo IMG.png";
@@ -7,6 +8,7 @@ import Error from "./Error";
 import users from "../server/server";
 
 function Login() {
+  const navigate = useNavigate();
   const [existingUsers, setExistingUsers] = useState([]);
   const [emailMatches, setEmailMatches] = useState("");
   const [passwordInDB, setPasswordInDB] = useState("");
@@ -31,7 +33,6 @@ function Login() {
   }, []);
 
   const handleSubmit = (event) => {
-    event.preventDefault();
     existingUsers.map((val) => {
       if (formValues.email === val.email) {
         setEmailMatches(val.email);
@@ -46,7 +47,7 @@ function Login() {
     } else {
       localStorage.setItem("user", IDMatches);
       console.log(`The user logged in is${IDMatches}`);
-      window.location.href = "http://localhost:3000/feed";
+      navigate("/feed");
     }
   };
 

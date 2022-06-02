@@ -16,7 +16,7 @@ import Line from "../images/Line.png";
 import Remove from "../images/remove.png";
 //KJV ID de4e12af7f28f599-02
 
-function Answer(props) {
+function Answer() {
   const [bibleBooks, setBibleBooks] = useState([]); //Get ALL books
   const [chosenBook, setChosenBook] = useState(""); //Users chosen book
   const [chapters, setChapters] = useState([]); //Get ALL chapters from ^^
@@ -219,14 +219,25 @@ function Answer(props) {
       <div className="background">
         <Navbar />
 
-        <h4 className="error-label">You must login to answer any questions</h4>
+        <h4 className="error-label-answer">
+          You must login to answer any questions
+        </h4>
+      </div>
+    );
+  } else if (questionID === "") {
+    return (
+      <div className="background">
+        <Navbar />
+
+        <h4 className="error-label-answer">
+          You must click on the 'Answer' button on the feed page
+        </h4>
       </div>
     );
   } else {
     return (
       <div className="background">
         <Navbar />
-
         <div className="answer-container">
           <div className="list-label-container">
             <h4 className="list-label">BOOKS</h4>

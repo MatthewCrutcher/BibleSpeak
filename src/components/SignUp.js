@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 //Styling
 import "./SignUp.css";
 import logo from "../images/Logo IMG.png";
@@ -8,6 +9,7 @@ import Error from "./Error";
 import users from "../server/server";
 
 function SignUp() {
+  const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -46,8 +48,8 @@ function SignUp() {
       throw setError("Passwords do not match");
     }
     users.post("/users", formValues).then((res) => {
-      console.log(res);
-      //Relocate here
+      localStorage.setItem("user", formValues.id);
+      navigate("/feed");
     });
   };
 
