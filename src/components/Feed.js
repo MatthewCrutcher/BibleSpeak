@@ -104,7 +104,7 @@ function Feed() {
               className={
                 loggedIn === val.userId ? "remove-post" : "remove-post-none"
               }
-              onClick={() => handleDelete(val.id, "post")}
+              onClick={() => handlePostDelete(val.id)}
             />
           </div>
           <button className="answer-button" onClick={() => handleAnswer()}>
@@ -118,6 +118,19 @@ function Feed() {
       </>
     );
   });
+
+  const handlePostDelete = (id) => {
+    post.delete(`/post/${id}`).then((res) => {
+      console.log(res);
+      answers.map((val) => {
+        if (val.postId === id) {
+          answer.delete(`/answer/${val.id}`).then((response) => {
+            console.log(response);
+          });
+        }
+      });
+    });
+  };
 
   const handleDelete = (id, url) => {
     post.delete(`/${url}/${id}`).then((res) => {
