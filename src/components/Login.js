@@ -10,14 +10,11 @@ import users from "../server/server";
 function Login() {
   const navigate = useNavigate();
   const [existingUsers, setExistingUsers] = useState([]);
-  const [emailMatches, setEmailMatches] = useState("");
-  const [passwordInDB, setPasswordInDB] = useState("");
   const [error, setError] = useState("");
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
   });
-  const [IDMatches, setIDMatches] = useState(0);
 
   useEffect(() => {
     const userApiCall = async () => {

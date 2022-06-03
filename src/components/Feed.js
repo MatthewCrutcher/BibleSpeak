@@ -63,11 +63,11 @@ function Feed() {
   const mapPost = postInDB.map((val) => {
     const mappingAnswers = answers.map((value) => {
       if (val.id === value.postId) {
-        const mappingScripture = value.scripture.map((scrip) => {
-          return <div>{scrip}</div>;
+        const mappingScripture = value.scripture.map((scrip, key) => {
+          return <div key={key}>{scrip}</div>;
         });
         return (
-          <div className="mapped-answers-container">
+          <div className="mapped-answers-container" key={value.id}>
             {mappingScripture}{" "}
             <img
               src={Remove}
@@ -88,7 +88,7 @@ function Feed() {
     };
 
     return (
-      <>
+      <div className="mapping-outer-container" key={val.id}>
         {" "}
         <img className="line-seperator" src={Line} alt="Line Seperator" />
         <div className="post-container">
@@ -116,7 +116,7 @@ function Feed() {
           <h3>Answers:</h3>
           <div className="mapped-answers-outer-container">{mappingAnswers}</div>
         </div>
-      </>
+      </div>
     );
   });
 
