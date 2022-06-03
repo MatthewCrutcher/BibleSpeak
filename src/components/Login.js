@@ -33,20 +33,24 @@ function Login() {
   }, []);
 
   const handleSubmit = (event) => {
+    event.preventDefault();
+    let emailMatches1 = "";
+    let passwordInDB1 = "";
+    let IDMatches1 = "";
     existingUsers.map((val) => {
       if (formValues.email === val.email) {
-        setEmailMatches(val.email);
-        setPasswordInDB(val.password);
-        setIDMatches(val.id);
+        emailMatches1 = val.email;
+        passwordInDB1 = val.password;
+        IDMatches1 = val.id;
       }
       return null;
     });
-    if (emailMatches === "" || formValues.password !== passwordInDB) {
+    if (emailMatches1 === "" || formValues.password !== passwordInDB1) {
       event.preventDefault();
       setError("Email or Password Are Incorrect!");
     } else {
-      localStorage.setItem("user", IDMatches);
-      console.log(`The user logged in is${IDMatches}`);
+      localStorage.setItem("user", IDMatches1);
+      console.log(`The user logged in is${IDMatches1}`);
       navigate("/feed");
     }
   };
@@ -82,7 +86,7 @@ function Login() {
               });
             }}
           />
-          <button>
+          <button type="submit">
             <h4>Login</h4>
           </button>
           <p>

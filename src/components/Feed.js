@@ -48,6 +48,7 @@ function Feed() {
       try {
         const res = await localStorage.getItem("user");
         setLoggedIn(res);
+        console.log(res);
       } catch (error) {
         console.log(error);
       }
