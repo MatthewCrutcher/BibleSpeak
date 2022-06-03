@@ -9,7 +9,6 @@ import Line from "../images/Line.png";
 import Navbar from "./Navbar";
 import Error from "./Error";
 import Remove from "../images/remove.png";
-import Answer from "../components/Answer";
 //Server / API
 import post from "../server/server";
 import answer from "../server/server";
@@ -48,6 +47,7 @@ function Feed() {
       try {
         const res = await localStorage.getItem("user");
         setLoggedIn(res);
+        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -62,11 +62,11 @@ function Feed() {
   const mapPost = postInDB.map((val) => {
     const mappingAnswers = answers.map((value) => {
       if (val.id === value.postId) {
-        const mappingScripture = value.scripture.map((scrip) => {
-          return <div>{scrip}</div>;
+        const mappingScripture = value.scripture.map((scrip, key) => {
+          return <div key={key}>{scrip}</div>;
         });
         return (
-          <div className="mapped-answers-container">
+          <div className="mapped-answers-container" key={value.id}>
             {mappingScripture}{" "}
             <img
               src={Remove}
@@ -87,7 +87,7 @@ function Feed() {
     };
 
     return (
-      <>
+      <div className="mapping-outer-container" key={val.id}>
         {" "}
         <img className="line-seperator" src={Line} alt="Line Seperator" />
         <div className="post-container">
@@ -104,7 +104,7 @@ function Feed() {
               className={
                 loggedIn === val.userId ? "remove-post" : "remove-post-none"
               }
-              onClick={() => handleDelete(val.id, "post")}
+              onClick={() => handlePostDelete(val.id)}
             />
           </div>
           <button className="answer-button" onClick={() => handleAnswer()}>
@@ -115,9 +115,21 @@ function Feed() {
           <h3>Answers:</h3>
           <div className="mapped-answers-outer-container">{mappingAnswers}</div>
         </div>
-      </>
+      </div>
     );
   });
+
+  const handlePostDelete = (id) => {
+    post.delete(`/post/${id}`).then((res) => {
+      console.log(res);
+      answers.map((val) => {
+        if (val.postId === id) {
+          answer.delete(`/answer/${val.id}`).then((response) => {});
+        }
+      });
+      window.location.reload();
+    });
+  };
 
   const handleDelete = (id, url) => {
     post.delete(`/${url}/${id}`).then((res) => {

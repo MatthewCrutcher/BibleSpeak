@@ -136,6 +136,10 @@
   margin-left: 25%;
 }
 
+.loading-spinner {
+  margin-left: 50%;
+}
+
 @media screen and (max-width: 600px) {
   .background {
     height: fit-content;

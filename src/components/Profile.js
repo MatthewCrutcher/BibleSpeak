@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { QuestionContext } from "./QuestionContext";
 //Styling
 import "./Profile.css";
 import Navbar from "./Navbar";
@@ -10,6 +12,7 @@ import post from "../server/server";
 import answer from "../server/server";
 
 function Profile() {
+  const navigate = useNavigate();
   const [selection, setSelection] = useState(false);
   const [postInDB, setPostInDB] = useState([]);
   const [answerInDB, setAnswerInDB] = useState([]);
@@ -20,7 +23,6 @@ function Profile() {
       try {
         const res = await post.get("/post");
         setPostInDB(res.data);
-        console.log(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -46,16 +48,57 @@ function Profile() {
     postApiCall();
     answerApiCall();
   }, []);
+
+  const { questionID, setQuestionID } = useContext(QuestionContext);
+
+  const handlePostDelete = (id) => {
+    post.delete(`/post/${id}`).then((res) => {
+      console.log(res);
+      answerInDB.map((val) => {
+        if (val.postId === id) {
+          answer.delete(`/answer/${val.id}`).then((response) => {
+            console.log(response);
+          });
+        }
+      });
+    });
+  };
+
+  const handleDelete = (id, url) => {
+    post.delete(`/${url}/${id}`).then((res) => {
+      console.log(res);
+    });
+
+    return null;
+  };
+
+  const handleAnswer = (val) => {
+    setQuestionID(val);
+    navigate("/answer");
+  };
+
+  let postExists = false;
+  let answerExists = false;
   const mapPost = postInDB.map((val) => {
     if (val.userId === loggedIn) {
+      postExists = true;
       const mappingAnswers = answerInDB.map((value) => {
         if (val.id === value.postId) {
+          answerExists = true;
           const mappingScripture = value.scripture.map((scrip, key) => {
             return <div key={key}>{scrip}</div>;
           });
           return (
             <div className="mapped-answers-container" key={value.id}>
               {mappingScripture}
+              <img
+                src={Remove}
+                alt="Remove Answer"
+                className={
+                  loggedIn === val.userId ? "remove-answer" : "remove-post-none"
+                }
+                onClick={() => handleDelete(value.id, "answer")}
+              />
             </div>
           );
         }
@@ -65,7 +108,6 @@ function Profile() {
           <img className="line-seperator" src={Line} alt="Line Seperator" />
           <div className="post-container">
             <h3>Question:</h3>
-
             <div className="post-text-container">
               <p>{val.text}</p>
             </div>
@@ -75,28 +117,36 @@ function Profile() {
                 src={Remove}
                 alt="Remove Post"
                 className="remove-post"
-
-                // onClick={() => handleDelete(val.id, "post")}
+                onClick={() => {
+                  handlePostDelete(val.id);
+                }}
               />
             </div>
             <button
               className="answer-button"
-              // onClick={() => navigate("/answer")}
+              onClick={() => handleAnswer(val.id)}
             >
               <h4>Answer</h4>
             </button>
           </div>
           <div className="post-container">
             <h3>Answers:</h3>
+
             <div className="mapped-answers-outer-container">
-              {mappingAnswers}
-              {loggedIn}
+              {answerExists === true ? (
+                <div>{mappingAnswers}</div>
+              ) : (
+                <h4 className="mapped-answers-container">
+                  There are no answers yet!
+                </h4>
+              )}
             </div>
           </div>
         </div>
       );
     }
   });
+
   if (loggedIn === "null") {
     return (
       <div>
@@ -108,13 +158,21 @@ function Profile() {
         </div>
       </div>
     );
+  } else if (postExists === false) {
+    return (
+      <div>
+        <Navbar />
+        <div className="profile-container">
+          <h2>You havent asked any questions!</h2>
+        </div>
+      </div>
+    );
   } else {
     return (
       <div>
         <Navbar />
         <div className="profile-container">
           <h2>Questions You Have Asked</h2>
-
           {mapPost}
         </div>
       </div>
@@ -122,33 +180,4 @@ function Profile() {
   }
 }
 
-/* <div className="button-container">
-          <button
-            className={
-              selection === false
-                ? "toggle-button-question"
-                : "toggle-button-question-deactive"
-            }
-            onClick={() => setSelection(false)}
-          >
-            <h4>Questions</h4>
-          </button>
-          <button
-            className={
-              selection === true
-                ? "toggle-button-answer"
-                : "toggle-button-answer-deactive"
-            }
-            onClick={() => setSelection(true)}
-          >
-            <h4>Answers</h4>
-          </button>
-        </div>
-        <h2
-          className={
-            selection === false
-              ? "profile-question-active"
-              : "profile-question-none"
-          }
-        > */
 export default Profile;
