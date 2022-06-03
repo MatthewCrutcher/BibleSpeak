@@ -9,7 +9,6 @@ import Line from "../images/Line.png";
 import Navbar from "./Navbar";
 import Error from "./Error";
 import Remove from "../images/remove.png";
-import Answer from "../components/Answer";
 //Server / API
 import post from "../server/server";
 import answer from "../server/server";
@@ -125,11 +124,10 @@ function Feed() {
       console.log(res);
       answers.map((val) => {
         if (val.postId === id) {
-          answer.delete(`/answer/${val.id}`).then((response) => {
-            console.log(response);
-          });
+          answer.delete(`/answer/${val.id}`).then((response) => {});
         }
       });
+      window.location.reload();
     });
   };
 

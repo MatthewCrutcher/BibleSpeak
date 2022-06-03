@@ -14,9 +14,14 @@ import axios from "axios";
 import Error from "../components/Error";
 import Line from "../images/Line.png";
 import Remove from "../images/remove.png";
+import ClipLoader from "react-spinners/ClipLoader";
 //KJV ID de4e12af7f28f599-02
 
 function Answer() {
+  const loading_spinner_css = `css
+  display: block;
+  margin: auto auto auto 50% ;
+`;
   const [bibleBooks, setBibleBooks] = useState([]); //Get ALL books
   const [chosenBook, setChosenBook] = useState(""); //Users chosen book
   const [chapters, setChapters] = useState([]); //Get ALL chapters from ^^
@@ -35,6 +40,8 @@ function Answer() {
   const [error, setError] = useState("");
   const [IDMatches, setIDMatches] = useState(1);
   const [loggedIn, setLoggedIn] = useState(null);
+  //Loading
+  const [chaptersLoading, setChaptersLoading] = useState(false);
 
   const { questionID, setQuestionID } = useContext(QuestionContext);
 
@@ -54,7 +61,7 @@ function Answer() {
     };
     const bibleChapterApiCall = async () => {
       if (chosenBook === "") {
-        //LOADING
+        setChaptersLoading(true);
       } else {
         try {
           const res = await axios.get(
@@ -66,6 +73,7 @@ function Answer() {
             }
           );
           setChapters(res.data.data);
+          setChaptersLoading(false);
         } catch (error) {
           console.log(error);
         }
@@ -73,7 +81,6 @@ function Answer() {
     };
     const bibleVerseApiCall = async () => {
       if (chosenChapter === "") {
-        //LOADING
       } else {
         try {
           const res = await axios.get(
@@ -245,7 +252,13 @@ function Answer() {
           </div>
           <div>
             <h4 className="list-label">CHAPTERS</h4>
-            <div className="list-container">{renderChapters}</div>
+            <div className="list-container">
+              {chaptersLoading === true ? (
+                <ClipLoader css={loading_spinner_css} />
+              ) : (
+                <div>{renderChapters}</div>
+              )}
+            </div>
           </div>
           <div>
             <h4 className="list-label">VERSES</h4>
