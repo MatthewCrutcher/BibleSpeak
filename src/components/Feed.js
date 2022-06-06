@@ -18,13 +18,14 @@ function Feed() {
   const [error, setError] = useState("");
   const [question, setQuestion] = useState({
     text: "",
-    userId: 0,
+    userId: "1",
     id: uuidv4(),
+    date: "",
   });
+  const current = new Date();
   const [postInDB, setPostInDB] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(null);
-  const [loginError, setLoginError] = useState(false);
 
   useEffect(() => {
     const postApiCall = async () => {
@@ -47,7 +48,6 @@ function Feed() {
       try {
         const res = await localStorage.getItem("user");
         setLoggedIn(res);
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -60,8 +60,10 @@ function Feed() {
   const { questionID, setQuestionID } = useContext(QuestionContext);
 
   const mapPost = postInDB.map((val) => {
+    let answerExists = false;
     const mappingAnswers = answers.map((value) => {
       if (val.id === value.postId) {
+        answerExists = true;
         const mappingScripture = value.scripture.map((scrip, key) => {
           return <div key={key}>{scrip}</div>;
         });
@@ -97,7 +99,7 @@ function Feed() {
             <p>{val.text}</p>
           </div>
           <div className="post-date-remove-container">
-            <p className="post-date">25/07/2001</p>
+            <p className="post-date">{val.date}</p>
             <img
               src={Remove}
               alt="Remove Post"
@@ -113,7 +115,15 @@ function Feed() {
         </div>
         <div className="post-container">
           <h3>Answers:</h3>
-          <div className="mapped-answers-outer-container">{mappingAnswers}</div>
+          <div className="mapped-answers-outer-container">
+            {answerExists === true ? (
+              <div>{mappingAnswers}</div>
+            ) : (
+              <h4 className="mapped-answers-container">
+                There are no answers yet!
+              </h4>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -153,6 +163,10 @@ function Feed() {
     }
   };
 
+  const date = `${current.getDate()}/${
+    current.getMonth() + 1
+  }/${current.getFullYear()}`;
+
   return (
     <div>
       <Navbar />
@@ -167,6 +181,7 @@ function Feed() {
                 ...question,
                 text: event.target.value,
                 userId: loggedIn,
+                date: date,
               });
             }}
           />

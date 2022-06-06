@@ -34,6 +34,7 @@ function SignUp() {
   }, []);
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     existingEmails.map((val) => {
       if (formValues.email === val.email) {
         event.preventDefault();
@@ -46,11 +47,12 @@ function SignUp() {
       event.preventDefault();
       console.log("Passwords do not");
       throw setError("Passwords do not match");
+    } else {
+      users.post("/users", formValues).then((res) => {
+        localStorage.setItem("user", formValues.id);
+        navigate("/feed");
+      });
     }
-    users.post("/users", formValues).then((res) => {
-      localStorage.setItem("user", formValues.id);
-      navigate("/feed");
-    });
   };
 
   return (
