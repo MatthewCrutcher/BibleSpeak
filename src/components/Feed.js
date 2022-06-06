@@ -20,7 +20,9 @@ function Feed() {
     text: "",
     userId: 0,
     id: uuidv4(),
+    date: "",
   });
+  const current = new Date();
   const [postInDB, setPostInDB] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(null);
@@ -99,7 +101,7 @@ function Feed() {
             <p>{val.text}</p>
           </div>
           <div className="post-date-remove-container">
-            <p className="post-date">25/07/2001</p>
+            <p className="post-date">{val.date}</p>
             <img
               src={Remove}
               alt="Remove Post"
@@ -163,6 +165,10 @@ function Feed() {
     }
   };
 
+  const date = `${current.getDate()}/${
+    current.getMonth() + 1
+  }/${current.getFullYear()}`;
+
   return (
     <div>
       <Navbar />
@@ -177,6 +183,7 @@ function Feed() {
                 ...question,
                 text: event.target.value,
                 userId: loggedIn,
+                date: date,
               });
             }}
           />
