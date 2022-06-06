@@ -20,8 +20,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 function Answer() {
   const loading_spinner_css = `css
   display: block;
-  margin: auto auto auto 50% ;
+  margin: 20% auto auto 42%;
 `;
+
+  const loading_spinner_css_selectedVerse = `css
+display: block`;
   const [bibleBooks, setBibleBooks] = useState([]); //Get ALL books
   const [chosenBook, setChosenBook] = useState(""); //Users chosen book
   const [chapters, setChapters] = useState([]); //Get ALL chapters from ^^
@@ -41,7 +44,9 @@ function Answer() {
   const [IDMatches, setIDMatches] = useState(1);
   const [loggedIn, setLoggedIn] = useState(null);
   //Loading
-  const [chaptersLoading, setChaptersLoading] = useState(false);
+  const [chaptersLoading, setChaptersLoading] = useState(true);
+  const [booksLoading, setBooksLoading] = useState(true);
+  const [versesLoading, setVersesLoading] = useState(true);
 
   const { questionID, setQuestionID } = useContext(QuestionContext);
 
@@ -55,13 +60,14 @@ function Answer() {
         });
 
         setBibleBooks(res.data.data);
+        setBooksLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
     const bibleChapterApiCall = async () => {
       if (chosenBook === "") {
-        setChaptersLoading(true);
+        //Loading
       } else {
         try {
           const res = await axios.get(
@@ -92,6 +98,7 @@ function Answer() {
             }
           );
           setVerses(res.data.data);
+          setVersesLoading(false);
         } catch (error) {
           console.log(error);
         }
@@ -248,7 +255,13 @@ function Answer() {
         <div className="answer-container">
           <div className="list-label-container">
             <h4 className="list-label">BOOKS</h4>
-            <div className="list-container">{renderBooks}</div>
+            <div className="list-container">
+              {booksLoading === true ? (
+                <ClipLoader css={loading_spinner_css} />
+              ) : (
+                <>{renderBooks}</>
+              )}
+            </div>
           </div>
           <div>
             <h4 className="list-label">CHAPTERS</h4>
@@ -256,18 +269,30 @@ function Answer() {
               {chaptersLoading === true ? (
                 <ClipLoader css={loading_spinner_css} />
               ) : (
-                <div>{renderChapters}</div>
+                <>{renderChapters}</>
               )}
             </div>
           </div>
           <div>
             <h4 className="list-label">VERSES</h4>
-            <div className="list-container">{renderVerses}</div>
+            <div className="list-container">
+              {versesLoading === true ? (
+                <ClipLoader css={loading_spinner_css} />
+              ) : (
+                <>{renderVerses}</>
+              )}
+            </div>
           </div>
         </div>
         <div className="selected-verse">
           <h3>You selected:</h3>
-          <h4 className="final-verse">{finalVerse}</h4>
+          <h4 className="final-verse">
+            {finalVerse === "" && chosenVerse !== "" ? (
+              <ClipLoader css={loading_spinner_css_selectedVerse} />
+            ) : (
+              <>{finalVerse}</>
+            )}
+          </h4>
           <button
             onClick={() => {
               if (finalVerse !== "") {
