@@ -60,8 +60,10 @@ function Feed() {
   const { questionID, setQuestionID } = useContext(QuestionContext);
 
   const mapPost = postInDB.map((val) => {
+    let answerExists = false;
     const mappingAnswers = answers.map((value) => {
       if (val.id === value.postId) {
+        answerExists = true;
         const mappingScripture = value.scripture.map((scrip, key) => {
           return <div key={key}>{scrip}</div>;
         });
@@ -113,7 +115,15 @@ function Feed() {
         </div>
         <div className="post-container">
           <h3>Answers:</h3>
-          <div className="mapped-answers-outer-container">{mappingAnswers}</div>
+          <div className="mapped-answers-outer-container">
+            {answerExists === true ? (
+              <div>{mappingAnswers}</div>
+            ) : (
+              <h4 className="mapped-answers-container">
+                There are no answers yet!
+              </h4>
+            )}
+          </div>
         </div>
       </div>
     );
