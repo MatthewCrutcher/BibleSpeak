@@ -35,8 +35,8 @@ display: block`;
   // Array of chosen verses that are ready to be posted as an answer
   const [chosenAnswers, setChosenAnswers] = useState({
     scripture: [],
-    userId: 1, // For logged in user
-    postId: null,
+    userId: "", // For logged in user
+    postId: "",
     id: uuidv4(), // Will be a UUID
   });
   //Errors
@@ -47,6 +47,7 @@ display: block`;
   const [chaptersLoading, setChaptersLoading] = useState(true);
   const [booksLoading, setBooksLoading] = useState(true);
   const [versesLoading, setVersesLoading] = useState(true);
+  const [stateQuestionId, setStateQuestionId] = useState("");
 
   const { questionID, setQuestionID } = useContext(QuestionContext);
 
@@ -125,27 +126,23 @@ display: block`;
         }
       }
     };
-    const getLoggedInUser = async () => {
+    const getLoggedInUserSetQuestionID = async () => {
       try {
         const res = await localStorage.getItem("user");
-        setLoggedIn(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const setQuestionID = () => {
-      try {
+        setChosenAnswers({ ...chosenAnswers, userId: res });
+        console.log(chosenAnswers.userId);
         setChosenAnswers({ ...chosenAnswers, postId: questionID });
+        console.log(chosenAnswers.postId);
       } catch (error) {
         console.log(error);
       }
     };
+
     finalApiCall();
     bibleVerseApiCall();
     bibleChapterApiCall();
     bibleBookApiCall();
-    getLoggedInUser();
-    setQuestionID();
+    getLoggedInUserSetQuestionID();
   }, [chosenBook, chosenChapter, chosenVerse]);
 
   const renderBooks = bibleBooks.map((val) => {

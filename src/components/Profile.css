@@ -123,6 +123,10 @@
   padding: 2%;
 }
 
+.questions-asked-header {
+  text-align: center;
+}
+
 @media screen and (max-width: 800px) {
   .button-container {
     flex-direction: column;

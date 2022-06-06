@@ -163,7 +163,9 @@ function Profile() {
       <div>
         <Navbar />
         <div className="profile-container">
-          <h2>You havent asked any questions!</h2>
+          <h2 className="questions-asked-header">
+            You havent asked any questions!
+          </h2>
         </div>
       </div>
     );
@@ -172,7 +174,7 @@ function Profile() {
       <div>
         <Navbar />
         <div className="profile-container">
-          <h2>Questions You Have Asked</h2>
+          <h2 className="questions-asked-header">Questions You Have Asked</h2>
           {mapPost}
         </div>
       </div>

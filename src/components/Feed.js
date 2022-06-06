@@ -18,7 +18,7 @@ function Feed() {
   const [error, setError] = useState("");
   const [question, setQuestion] = useState({
     text: "",
-    userId: 0,
+    userId: "1",
     id: uuidv4(),
     date: "",
   });
@@ -26,7 +26,6 @@ function Feed() {
   const [postInDB, setPostInDB] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(null);
-  const [loginError, setLoginError] = useState(false);
 
   useEffect(() => {
     const postApiCall = async () => {
@@ -49,7 +48,6 @@ function Feed() {
       try {
         const res = await localStorage.getItem("user");
         setLoggedIn(res);
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
