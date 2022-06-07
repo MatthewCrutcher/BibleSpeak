@@ -47,7 +47,7 @@ display: block`;
   const [chaptersLoading, setChaptersLoading] = useState(true);
   const [booksLoading, setBooksLoading] = useState(true);
   const [versesLoading, setVersesLoading] = useState(true);
-  const [stateQuestionId, setStateQuestionId] = useState("");
+  const [stateUserId, setStateUserId] = useState("");
 
   const { questionID, setQuestionID } = useContext(QuestionContext);
 
@@ -126,13 +126,10 @@ display: block`;
         }
       }
     };
-    const getLoggedInUserSetQuestionID = async () => {
+    const getLoggedInUserSetQuestionID = () => {
       try {
-        const res = await localStorage.getItem("user");
-        setChosenAnswers({ ...chosenAnswers, userId: res });
-        console.log(chosenAnswers.userId);
-        setChosenAnswers({ ...chosenAnswers, postId: questionID });
-        console.log(chosenAnswers.postId);
+        const res = localStorage.getItem("user");
+        setChosenAnswers({ ...chosenAnswers, postId: questionID, userId: res });
       } catch (error) {
         console.log(error);
       }
