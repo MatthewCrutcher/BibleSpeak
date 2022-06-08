@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { QuestionContext } from "./QuestionContext";
+import { useNavigate } from "react-router-dom";
 
 //API
 import bibleApi from "./api/bibleApi";
@@ -48,8 +49,8 @@ display: block`;
   const [booksLoading, setBooksLoading] = useState(true);
   const [versesLoading, setVersesLoading] = useState(true);
   const [stateUserId, setStateUserId] = useState("");
-
   const { questionID, setQuestionID } = useContext(QuestionContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const bibleBookApiCall = async () => {
@@ -213,10 +214,15 @@ display: block`;
   });
 
   const handleSubmit = () => {
-    if (error === "") {
-      answer.post("/answer", chosenAnswers).then((res) => {
-        console.log(res);
+    if (error === "" && chosenAnswers.scripture.length !== 0) {
+      answer.post("/answer", chosenAnswers).then(() => {
+        navigate("/feed");
       });
+    } else if (
+      error === "You cannot submit nothing..." &&
+      chosenAnswers.scripture.length !== 0
+    ) {
+      setError("");
     } else {
       setError("You cannot submit nothing...");
     }
