@@ -18,7 +18,7 @@ function Feed() {
   const [error, setError] = useState("");
   const [question, setQuestion] = useState({
     text: "",
-    userId: "1",
+    userId: "",
     id: uuidv4(),
     date: "",
   });
@@ -146,7 +146,7 @@ function Feed() {
       console.log(res);
     });
 
-    return null;
+    window.location.reload();
   };
 
   const handleQuestion = (event) => {

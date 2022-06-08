@@ -19,6 +19,11 @@
       "email": "phoneTest@hotmail.com",
       "password": "1",
       "id": "3befa7a8-7806-4309-9e07-a8c35e40fdfc"
+    },
+    {
+      "email": "final@gmail.com",
+      "password": "mkl",
+      "id": "f6696549-33a2-438b-bb40-f2f627444094"
     }
   ],
   "post": [
@@ -32,6 +37,12 @@
       "userId": "51de0e18-a5df-497b-b8d8-d86297bce5e3",
       "id": "d21d0ffa-d208-4588-850d-d118a9a7f201",
       "date": "7/6/2022"
+    },
+    {
+      "text": "Who created the earth?",
+      "userId": "f6696549-33a2-438b-bb40-f2f627444094",
+      "id": "4b90cd91-cfda-428c-91f0-d5c80e87324e",
+      "date": "8/6/2022"
     }
   ],
   "answer": [
@@ -42,22 +53,6 @@
       "userId": "1",
       "postId": "1a698f3b-e60c-47cf-ade6-c978b024f69e",
       "id": "dbf28237-680b-47e7-a378-1c044d8bcda4"
-    },
-    {
-      "scripture": [
-        "GEN.2.4"
-      ],
-      "userId": "247bcaec-e391-4639-84c2-b122e43e55cd",
-      "postId": "1a698f3b-e60c-47cf-ade6-c978b024f69e",
-      "id": "cee2ea10-32e4-4424-a4e9-9c8b5a5eed68"
-    },
-    {
-      "scripture": [
-        "EXO.3.2"
-      ],
-      "userId": "247bcaec-e391-4639-84c2-b122e43e55cd",
-      "postId": "1a698f3b-e60c-47cf-ade6-c978b024f69e",
-      "id": "7937e87e-e6ec-45ea-af8d-d4ba1a8fc0ae"
     },
     {
       "scripture": [
@@ -93,13 +88,11 @@
     },
     {
       "scripture": [
-        "EXO.1.2",
-        "EXO.1.4",
-        "EXO.1.9"
+        "GEN.1.2"
       ],
       "userId": "1",
       "postId": "1a698f3b-e60c-47cf-ade6-c978b024f69e",
-      "id": "2fd6c9e8-3dcc-454a-93a0-e29097beab47"
+      "id": "a6d34b13-0467-4391-a5f8-d582f067d879"
     }
   ]
 }

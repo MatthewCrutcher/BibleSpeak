@@ -12,9 +12,14 @@ function Navbar() {
   const toggleActive = () => {
     setActive(!active);
   };
-  const handleLogout = () => {
-    navigate("/login");
-    localStorage.setItem("user", null);
+  const handleLogout = (location) => {
+    if (location === 1) {
+      navigate("/");
+      localStorage.setItem("user", null);
+    } else {
+      navigate("/login");
+      localStorage.setItem("user", null);
+    }
   };
 
   useEffect(() => {
@@ -31,7 +36,7 @@ function Navbar() {
 
   return (
     <nav className="navbar-container">
-      <a className="logo-link" href="/">
+      <a className="logo-link" onClick={() => handleLogout(1)}>
         <div className="logo-container-navbar">
           <img src={logo} alt="Logo" />
           <h2>Bible Speak</h2>

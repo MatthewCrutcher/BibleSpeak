@@ -131,6 +131,7 @@ display: block`;
       try {
         const res = localStorage.getItem("user");
         setChosenAnswers({ ...chosenAnswers, postId: questionID, userId: res });
+        setLoggedIn(res);
       } catch (error) {
         console.log(error);
       }
