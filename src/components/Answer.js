@@ -127,7 +127,12 @@ display: block`;
     const getLoggedInUserSetQuestionID = () => {
       try {
         const res = localStorage.getItem("user");
-        setChosenAnswers({ ...chosenAnswers, postId: questionID, userId: res });
+        //  setChosenAnswers({ ...chosenAnswers, postId: questionID, userId: res });
+        setChosenAnswers((prevValue) => ({
+          ...prevValue,
+          postId: questionID,
+          userId: res,
+        }));
         setLoggedIn(res);
       } catch (error) {
         console.log(error);
@@ -139,7 +144,7 @@ display: block`;
     bibleChapterApiCall();
     bibleBookApiCall();
     getLoggedInUserSetQuestionID();
-  }, [chosenBook, chosenChapter, chosenVerse]);
+  }, [chosenBook, chosenChapter, chosenVerse, questionID]);
 
   const renderBooks = bibleBooks.map((val) => {
     return (
