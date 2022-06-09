@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { QuestionContext } from "./QuestionContext";
+import { useNavigate } from "react-router-dom";
 
 //API
 import bibleApi from "./api/bibleApi";
@@ -12,7 +13,6 @@ import "./Answer.css";
 import Navbar from "./Navbar";
 import axios from "axios";
 import Error from "../components/Error";
-import Line from "../images/Line.png";
 import Remove from "../images/remove.png";
 import ClipLoader from "react-spinners/ClipLoader";
 //KJV ID de4e12af7f28f599-02
@@ -41,15 +41,13 @@ display: block`;
   });
   //Errors
   const [error, setError] = useState("");
-  const [IDMatches, setIDMatches] = useState(1);
   const [loggedIn, setLoggedIn] = useState(null);
   //Loading
   const [chaptersLoading, setChaptersLoading] = useState(true);
   const [booksLoading, setBooksLoading] = useState(true);
   const [versesLoading, setVersesLoading] = useState(true);
-  const [stateUserId, setStateUserId] = useState("");
-
-  const { questionID, setQuestionID } = useContext(QuestionContext);
+  const { questionID } = useContext(QuestionContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const bibleBookApiCall = async () => {
@@ -129,7 +127,13 @@ display: block`;
     const getLoggedInUserSetQuestionID = () => {
       try {
         const res = localStorage.getItem("user");
-        setChosenAnswers({ ...chosenAnswers, postId: questionID, userId: res });
+        //  setChosenAnswers({ ...chosenAnswers, postId: questionID, userId: res });
+        setChosenAnswers((prevValue) => ({
+          ...prevValue,
+          postId: questionID,
+          userId: res,
+        }));
+        setLoggedIn(res);
       } catch (error) {
         console.log(error);
       }
@@ -140,7 +144,7 @@ display: block`;
     bibleChapterApiCall();
     bibleBookApiCall();
     getLoggedInUserSetQuestionID();
-  }, [chosenBook, chosenChapter, chosenVerse]);
+  }, [chosenBook, chosenChapter, chosenVerse, questionID]);
 
   const renderBooks = bibleBooks.map((val) => {
     return (
@@ -213,10 +217,15 @@ display: block`;
   });
 
   const handleSubmit = () => {
-    if (error === "") {
-      answer.post("/answer", chosenAnswers).then((res) => {
-        console.log(res);
+    if (error === "" && chosenAnswers.scripture.length !== 0) {
+      answer.post("/answer", chosenAnswers).then(() => {
+        navigate("/feed");
       });
+    } else if (
+      error === "You cannot submit nothing..." &&
+      chosenAnswers.scripture.length !== 0
+    ) {
+      setError("");
     } else {
       setError("You cannot submit nothing...");
     }

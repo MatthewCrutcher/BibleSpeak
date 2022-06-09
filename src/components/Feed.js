@@ -18,7 +18,7 @@ function Feed() {
   const [error, setError] = useState("");
   const [question, setQuestion] = useState({
     text: "",
-    userId: "1",
+    userId: "",
     id: uuidv4(),
     date: "",
   });
@@ -57,7 +57,7 @@ function Feed() {
     answersApiCall();
     getLoggedInUser();
   }, []);
-  const { questionID, setQuestionID } = useContext(QuestionContext);
+  const { setQuestionID } = useContext(QuestionContext);
 
   const mapPost = postInDB.map((val) => {
     let answerExists = false;
@@ -81,6 +81,7 @@ function Feed() {
           </div>
         );
       }
+      return null;
     });
 
     const handleAnswer = () => {
@@ -136,6 +137,7 @@ function Feed() {
         if (val.postId === id) {
           answer.delete(`/answer/${val.id}`).then((response) => {});
         }
+        return null;
       });
       window.location.reload();
     });
@@ -146,7 +148,7 @@ function Feed() {
       console.log(res);
     });
 
-    return null;
+    window.location.reload();
   };
 
   const handleQuestion = (event) => {

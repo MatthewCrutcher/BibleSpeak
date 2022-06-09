@@ -12,9 +12,14 @@ function Navbar() {
   const toggleActive = () => {
     setActive(!active);
   };
-  const handleLogout = () => {
-    navigate("/login");
-    localStorage.setItem("user", null);
+  const handleLogout = (location) => {
+    if (location === 1) {
+      navigate("/");
+      localStorage.setItem("user", null);
+    } else {
+      navigate("/login");
+      localStorage.setItem("user", null);
+    }
   };
 
   useEffect(() => {
@@ -31,7 +36,7 @@ function Navbar() {
 
   return (
     <nav className="navbar-container">
-      <a className="logo-link" href="/">
+      <a className="logo-link" href={() => {}} onClick={() => handleLogout(1)}>
         <div className="logo-container-navbar">
           <img src={logo} alt="Logo" />
           <h2>Bible Speak</h2>
@@ -47,16 +52,24 @@ function Navbar() {
       <div className={active ? "navbarLinks active" : "navbarLinks"}>
         <ul>
           <li>
-            <a onClick={() => navigate("/feed")}>Feed</a>
+            <a href={() => {}} onClick={() => navigate("/feed")}>
+              Feed
+            </a>
           </li>
           <li>
-            <a onClick={() => navigate("/profile")}>Profile</a>
+            <a href={() => {}} onClick={() => navigate("/profile")}>
+              Profile
+            </a>
           </li>
           <li>
             {loggedIn === "null" ? (
-              <a onClick={() => handleLogout()}>Login</a>
+              <a href={() => {}} onClick={() => handleLogout()}>
+                Login
+              </a>
             ) : (
-              <a onClick={() => handleLogout()}>Logout</a>
+              <a href={() => {}} onClick={() => handleLogout()}>
+                Logout
+              </a>
             )}
           </li>
         </ul>

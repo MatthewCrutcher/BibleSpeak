@@ -13,7 +13,6 @@ import answer from "../server/server";
 
 function Profile() {
   const navigate = useNavigate();
-  const [selection, setSelection] = useState(false);
   const [postInDB, setPostInDB] = useState([]);
   const [answerInDB, setAnswerInDB] = useState([]);
   const [loggedIn, setLoggedIn] = useState(null);
@@ -49,17 +48,16 @@ function Profile() {
     answerApiCall();
   }, []);
 
-  const { questionID, setQuestionID } = useContext(QuestionContext);
+  const { setQuestionID } = useContext(QuestionContext);
 
   const handlePostDelete = (id) => {
     post.delete(`/post/${id}`).then((res) => {
       console.log(res);
       answerInDB.map((val) => {
         if (val.postId === id) {
-          answer.delete(`/answer/${val.id}`).then((response) => {
-            console.log(response);
-          });
+          answer.delete(`/answer/${val.id}`).then((response) => {});
         }
+        return null;
       });
     });
   };
@@ -102,6 +100,7 @@ function Profile() {
             </div>
           );
         }
+        return null;
       });
       return (
         <div className="mapping-outer-container" key={val.id}>
@@ -145,6 +144,7 @@ function Profile() {
         </div>
       );
     }
+    return null;
   });
 
   if (loggedIn === "null") {
