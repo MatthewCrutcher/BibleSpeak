@@ -13,7 +13,6 @@ import "./Answer.css";
 import Navbar from "./Navbar";
 import axios from "axios";
 import Error from "../components/Error";
-import Line from "../images/Line.png";
 import Remove from "../images/remove.png";
 import ClipLoader from "react-spinners/ClipLoader";
 //KJV ID de4e12af7f28f599-02
@@ -42,14 +41,12 @@ display: block`;
   });
   //Errors
   const [error, setError] = useState("");
-  const [IDMatches, setIDMatches] = useState(1);
   const [loggedIn, setLoggedIn] = useState(null);
   //Loading
   const [chaptersLoading, setChaptersLoading] = useState(true);
   const [booksLoading, setBooksLoading] = useState(true);
   const [versesLoading, setVersesLoading] = useState(true);
-  const [stateUserId, setStateUserId] = useState("");
-  const { questionID, setQuestionID } = useContext(QuestionContext);
+  const { questionID } = useContext(QuestionContext);
   const navigate = useNavigate();
 
   useEffect(() => {
