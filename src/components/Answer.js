@@ -69,8 +69,8 @@ display: block`;
         //Loading
       } else {
         try {
-          const res = await axios.get(
-            `/de4e12af7f28f599-02/books/${chosenBook}/chapters`,
+          const res = await bibleApi.get(
+            `bibles/de4e12af7f28f599-02/books/${chosenBook}/chapters`,
             {
               headers: {
                 "api-key": BIBLE_API_KEY,
@@ -88,8 +88,8 @@ display: block`;
       if (chosenChapter === "") {
       } else {
         try {
-          const res = await axios.get(
-            `/de4e12af7f28f599-02/chapters/${chosenChapter}/verses`,
+          const res = await bibleApi.get(
+            `bibles/de4e12af7f28f599-02/chapters/${chosenChapter}/verses`,
             {
               headers: {
                 "api-key": BIBLE_API_KEY,
@@ -108,8 +108,8 @@ display: block`;
         //LOADING
       } else {
         try {
-          const res = await axios.get(
-            `/de4e12af7f28f599-02/verses/${chosenVerse}`,
+          const res = await bibleApi.get(
+            `bibles/de4e12af7f28f599-02/verses/${chosenVerse}`,
             {
               headers: {
                 "api-key": BIBLE_API_KEY,
