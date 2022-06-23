@@ -26,6 +26,17 @@ function Feed() {
   const [postInDB, setPostInDB] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState({
+    active: false,
+    id: "",
+    scripture: [],
+  });
+
+  const [active, setActive] = useState(false);
+
+  const toggleActive = () => {
+    setActive(!active);
+  };
 
   useEffect(() => {
     const postApiCall = async () => {
@@ -68,16 +79,25 @@ function Feed() {
           return <div key={key}>{scrip}</div>;
         });
         return (
-          <div className="mapped-answers-container" key={value.id}>
-            {mappingScripture}{" "}
-            <img
-              src={Remove}
-              alt="Remove Answer"
-              className={
-                loggedIn === value.userId ? "remove-answer" : "remove-post-none"
-              }
-              onClick={() => handleDelete(value.id, "answer")}
-            />
+          <div key={value.id}>
+            <div className="mapped-answer-delete-container">
+              <div className="mapped-answers-container">{mappingScripture}</div>
+              <img
+                src={Remove}
+                alt="Remove Answer"
+                className={
+                  loggedIn === value.userId
+                    ? "remove-answer"
+                    : "remove-post-none"
+                }
+                onClick={() => toggleActive()}
+              />
+            </div>
+            <div className={active ? "confirm-delete" : "confirm-delete-none"}>
+              <alert>Are you sure you want to delete this?</alert>
+              <button onClick={() => handleDelete(0, "answer")}>YES</button>
+              <button>NO</button>
+            </div>
           </div>
         );
       }
@@ -95,7 +115,6 @@ function Feed() {
         <img className="line-seperator" src={Line} alt="Line Seperator" />
         <div className="post-container">
           <h3>Question:</h3>
-
           <div className="post-text-container">
             <p>{val.text}</p>
           </div>
