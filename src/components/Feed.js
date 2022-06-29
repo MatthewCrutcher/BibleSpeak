@@ -70,84 +70,91 @@ function Feed() {
   }, []);
   const { setQuestionID } = useContext(QuestionContext);
 
-  const mapPost = postInDB.map((val) => {
-    let answerExists = false;
-    const mappingAnswers = answers.map((value) => {
-      if (val.id === value.postId) {
-        answerExists = true;
-        const mappingScripture = value.scripture.map((scrip, key) => {
-          return <div key={key}>{scrip}</div>;
-        });
-        return (
-          <div key={value.id}>
-            <div className="mapped-answer-delete-container">
-              <div className="mapped-answers-container">{mappingScripture}</div>
+  const mapPost = postInDB
+    .slice(0)
+    .reverse()
+    .map((val) => {
+      let answerExists = false;
+      const mappingAnswers = answers.map((value) => {
+        if (val.id === value.postId) {
+          answerExists = true;
+          const mappingScripture = value.scripture.map((scrip, key) => {
+            return <div key={key}>{scrip}</div>;
+          });
+          return (
+            <div key={value.id}>
+              <div className="mapped-answer-delete-container">
+                <div className="mapped-answers-container">
+                  {mappingScripture}
+                </div>
+                <img
+                  src={Remove}
+                  alt="Remove Answer"
+                  className={
+                    loggedIn === value.userId
+                      ? "remove-answer"
+                      : "remove-post-none"
+                  }
+                  onClick={() => toggleActive()}
+                />
+              </div>
+              <div
+                className={active ? "confirm-delete" : "confirm-delete-none"}
+              >
+                <div>Are you sure you want to delete this?</div>
+                <button onClick={() => handleDelete(0, "answer")}>YES</button>
+                <button>NO</button>
+              </div>
+            </div>
+          );
+        }
+        return null;
+      });
+
+      const handleAnswer = () => {
+        setQuestionID(val.id);
+        navigate("/answer");
+      };
+
+      return (
+        <div className="mapping-outer-container" key={val.id}>
+          {" "}
+          <img className="line-seperator" src={Line} alt="Line Seperator" />
+          <div className="post-container">
+            <h3>Question:</h3>
+            <div className="post-text-container">
+              <p>{val.text}</p>
+            </div>
+            <div className="post-date-remove-container">
+              <p className="post-date">{val.date}</p>
               <img
                 src={Remove}
-                alt="Remove Answer"
+                alt="Remove Post"
                 className={
-                  loggedIn === value.userId
-                    ? "remove-answer"
-                    : "remove-post-none"
+                  loggedIn === val.userId ? "remove-post" : "remove-post-none"
                 }
-                onClick={() => toggleActive()}
+                onClick={() => handlePostDelete(val.id)}
               />
             </div>
-            <div className={active ? "confirm-delete" : "confirm-delete-none"}>
-              <alert>Are you sure you want to delete this?</alert>
-              <button onClick={() => handleDelete(0, "answer")}>YES</button>
-              <button>NO</button>
+            <button className="answer-button" onClick={() => handleAnswer()}>
+              <h4>Answer</h4>
+            </button>
+          </div>
+          <div className="post-container">
+            <h3>Answers:</h3>
+            <div className="mapped-answers-outer-container">
+              {answerExists === true ? (
+                <div>{mappingAnswers}</div>
+              ) : (
+                <h4 className="mapped-answers-container">
+                  There are no answers yet!
+                </h4>
+              )}
             </div>
           </div>
-        );
-      }
-      return null;
+        </div>
+      );
     });
-
-    const handleAnswer = () => {
-      setQuestionID(val.id);
-      navigate("/answer");
-    };
-
-    return (
-      <div className="mapping-outer-container" key={val.id}>
-        {" "}
-        <img className="line-seperator" src={Line} alt="Line Seperator" />
-        <div className="post-container">
-          <h3>Question:</h3>
-          <div className="post-text-container">
-            <p>{val.text}</p>
-          </div>
-          <div className="post-date-remove-container">
-            <p className="post-date">{val.date}</p>
-            <img
-              src={Remove}
-              alt="Remove Post"
-              className={
-                loggedIn === val.userId ? "remove-post" : "remove-post-none"
-              }
-              onClick={() => handlePostDelete(val.id)}
-            />
-          </div>
-          <button className="answer-button" onClick={() => handleAnswer()}>
-            <h4>Answer</h4>
-          </button>
-        </div>
-        <div className="post-container">
-          <h3>Answers:</h3>
-          <div className="mapped-answers-outer-container">
-            {answerExists === true ? (
-              <div>{mappingAnswers}</div>
-            ) : (
-              <h4 className="mapped-answers-container">
-                There are no answers yet!
-              </h4>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  });
 
   const handlePostDelete = (id) => {
     post.delete(`/post/${id}`).then((res) => {

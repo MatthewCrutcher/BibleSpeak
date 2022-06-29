@@ -77,75 +77,80 @@ function Profile() {
 
   let postExists = false;
   let answerExists = false;
-  const mapPost = postInDB.map((val) => {
-    if (val.userId === loggedIn) {
-      postExists = true;
-      const mappingAnswers = answerInDB.map((value) => {
-        if (val.id === value.postId) {
-          answerExists = true;
-          const mappingScripture = value.scripture.map((scrip, key) => {
-            return <div key={key}>{scrip}</div>;
-          });
-          return (
-            <div className="mapped-answers-container" key={value.id}>
-              {mappingScripture}
-              <img
-                src={Remove}
-                alt="Remove Answer"
-                className={
-                  loggedIn === val.userId ? "remove-answer" : "remove-post-none"
-                }
-                onClick={() => handleDelete(value.id, "answer")}
-              />
+  const mapPost = postInDB
+    .slice(0)
+    .reverse()
+    .map((val) => {
+      if (val.userId === loggedIn) {
+        postExists = true;
+        const mappingAnswers = answerInDB.map((value) => {
+          if (val.id === value.postId) {
+            answerExists = true;
+            const mappingScripture = value.scripture.map((scrip, key) => {
+              return <div key={key}>{scrip}</div>;
+            });
+            return (
+              <div className="mapped-answers-container" key={value.id}>
+                {mappingScripture}
+                <img
+                  src={Remove}
+                  alt="Remove Answer"
+                  className={
+                    loggedIn === val.userId
+                      ? "remove-answer"
+                      : "remove-post-none"
+                  }
+                  onClick={() => handleDelete(value.id, "answer")}
+                />
+              </div>
+            );
+          }
+          return null;
+        });
+        return (
+          <div className="mapping-outer-container" key={val.id}>
+            <img className="line-seperator" src={Line} alt="Line Seperator" />
+            <div className="post-container">
+              <h3>Question:</h3>
+              <div className="post-text-container">
+                <p>{val.text}</p>
+              </div>
+              <div className="post-date-remove-container">
+                <p className="post-date">25/07/2001</p>
+                <img
+                  src={Remove}
+                  alt="Remove Post"
+                  className="remove-post"
+                  onClick={() => {
+                    handlePostDelete(val.id);
+                  }}
+                />
+              </div>
+              <button
+                className="answer-button"
+                onClick={() => handleAnswer(val.id)}
+              >
+                <h4>Answer</h4>
+              </button>
             </div>
-          );
-        }
-        return null;
-      });
-      return (
-        <div className="mapping-outer-container" key={val.id}>
-          <img className="line-seperator" src={Line} alt="Line Seperator" />
-          <div className="post-container">
-            <h3>Question:</h3>
-            <div className="post-text-container">
-              <p>{val.text}</p>
-            </div>
-            <div className="post-date-remove-container">
-              <p className="post-date">25/07/2001</p>
-              <img
-                src={Remove}
-                alt="Remove Post"
-                className="remove-post"
-                onClick={() => {
-                  handlePostDelete(val.id);
-                }}
-              />
-            </div>
-            <button
-              className="answer-button"
-              onClick={() => handleAnswer(val.id)}
-            >
-              <h4>Answer</h4>
-            </button>
-          </div>
-          <div className="post-container">
-            <h3>Answers:</h3>
+            <div className="post-container">
+              <h3>Answers:</h3>
 
-            <div className="mapped-answers-outer-container">
-              {answerExists === true ? (
-                <div>{mappingAnswers}</div>
-              ) : (
-                <h4 className="mapped-answers-container">
-                  There are no answers yet!
-                </h4>
-              )}
+              <div className="mapped-answers-outer-container">
+                {answerExists === true ? (
+                  <div>{mappingAnswers}</div>
+                ) : (
+                  <h4 className="mapped-answers-container">
+                    There are no answers yet!
+                  </h4>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      );
-    }
-    return null;
-  });
+        );
+      }
+      return null;
+    });
 
   if (loggedIn === "null") {
     return (
