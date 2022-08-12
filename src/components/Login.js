@@ -34,6 +34,7 @@ function Login() {
     let emailMatches1 = "";
     let passwordInDB1 = "";
     let IDMatches1 = "";
+
     existingUsers.map((val) => {
       if (formValues.email === val.email) {
         emailMatches1 = val.email;
@@ -42,6 +43,7 @@ function Login() {
       }
       return null;
     });
+
     if (emailMatches1 === "" || formValues.password !== passwordInDB1) {
       event.preventDefault();
       setError("Email or Password Are Incorrect!");
@@ -54,44 +56,50 @@ function Login() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="login-page">
-        <div className="logo-container-login">
-          <img src={logo} alt="Logo" />
-          <h2>Bible Speak</h2>
+      {existingUsers.length === 0 ? (
+        <div className="login-page">
+          <h2 style={{ textAlign: "center" }}>Fetching users...</h2>
         </div>
-        <div className="input-container-login">
-          <label type="email" required autoCapitalize="none">
-            Email:
-          </label>
-          <input
-            id="email-input"
-            type="email"
-            required
-            value={formValues.email}
-            onChange={(event) => {
-              setFormValues({ ...formValues, email: event.target.value });
-            }}
-          />
-          <label>Password:</label>
-          <input
-            type="password"
-            required
-            onChange={(event) => {
-              setFormValues({
-                ...formValues,
-                password: event.target.value,
-              });
-            }}
-          />
-          <button type="submit">
-            <h4>Login</h4>
-          </button>
-          <p>
-            Don't Have An Account? <a href="/signup">Sign Up Here</a>
-          </p>
-          <Error error={error} />
+      ) : (
+        <div className="login-page">
+          <div className="logo-container-login">
+            <img src={logo} alt="Logo" />
+            <h2>Bible Speak</h2>
+          </div>
+          <div className="input-container-login">
+            <label type="email" required autoCapitalize="none">
+              Email:
+            </label>
+            <input
+              id="email-input"
+              type="email"
+              required
+              value={formValues.email}
+              onChange={(event) => {
+                setFormValues({ ...formValues, email: event.target.value });
+              }}
+            />
+            <label>Password:</label>
+            <input
+              type="password"
+              required
+              onChange={(event) => {
+                setFormValues({
+                  ...formValues,
+                  password: event.target.value,
+                });
+              }}
+            />
+            <button type="submit">
+              <h4>Login</h4>
+            </button>
+            <p>
+              Don't Have An Account? <a href="/signup">Sign Up Here</a>
+            </p>
+            <Error error={error} />
+          </div>
         </div>
-      </div>
+      )}
     </form>
   );
 }
