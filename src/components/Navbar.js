@@ -36,7 +36,7 @@ function Navbar() {
 
   return (
     <nav className="navbar-container">
-      <a className="logo-link" href={() => {}} onClick={() => handleLogout(1)}>
+      <a className="logo-link" onClick={() => handleLogout(1)}>
         <div className="logo-container-navbar">
           <img src={logo} alt="Logo" />
           <h2>Bible Speak</h2>
@@ -52,24 +52,16 @@ function Navbar() {
       <div className={active ? "navbarLinks active" : "navbarLinks"}>
         <ul>
           <li>
-            <a href={() => {}} onClick={() => navigate("/feed")}>
-              Feed
-            </a>
+            <a onClick={() => navigate("/feed")}>Feed</a>
           </li>
           <li>
-            <a href={() => {}} onClick={() => navigate("/profile")}>
-              Profile
-            </a>
+            <a onClick={() => navigate("/profile")}>Profile</a>
           </li>
           <li>
             {loggedIn === "null" ? (
-              <a href={() => {}} onClick={() => handleLogout()}>
-                Login
-              </a>
+              <a onClick={() => handleLogout()}>Login</a>
             ) : (
-              <a href={() => {}} onClick={() => handleLogout()}>
-                Logout
-              </a>
+              <a onClick={() => handleLogout()}>Logout</a>
             )}
           </li>
         </ul>

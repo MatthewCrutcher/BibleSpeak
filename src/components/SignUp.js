@@ -57,56 +57,62 @@ function SignUp() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="signup-page">
-        <div className="logo-container-signup">
-          <img src={logo} alt="Logo" />
-          <h2>Bible Speak</h2>
+      {existingEmails.length === 0 ? (
+        <div className="signup-page">
+          <h2 style={{ textAlign: "center" }}>Fetching users...</h2>
         </div>
-        <div className="input-container-signup">
-          <label className="label-email">Email:</label>
-          <input
-            id="email-input"
-            type="email"
-            required
-            value={formValues.email}
-            onChange={(event) => {
-              setFormValues({ ...formValues, email: event.target.value });
-            }}
-          />
-          <div className="create-password-container">
-            <div className="label-input-container">
-              <label>Create Password:</label>
-              <input
-                type="password"
-                required
-                onChange={(event) => {
-                  setFormValues({
-                    ...formValues,
-                    password: event.target.value,
-                  });
-                }}
-              />
-            </div>
-            <div className="label-input-container">
-              <label>Confirm Password:</label>
-              <input
-                type="password"
-                required
-                onChange={(event) => {
-                  setConfirmPassword(event.target.value);
-                }}
-              />
-            </div>
+      ) : (
+        <div className="signup-page">
+          <div className="logo-container-signup">
+            <img src={logo} alt="Logo" />
+            <h2>Bible Speak</h2>
           </div>
-          <button>
-            <h4>Sign-Up</h4>
-          </button>
-          <p>
-            Already Have An Account? <a href="/login">Login Here</a>
-          </p>
-          <Error error={error} />
+          <div className="input-container-signup">
+            <label className="label-email">Email:</label>
+            <input
+              id="email-input"
+              type="email"
+              required
+              value={formValues.email}
+              onChange={(event) => {
+                setFormValues({ ...formValues, email: event.target.value });
+              }}
+            />
+            <div className="create-password-container">
+              <div className="label-input-container">
+                <label>Create Password:</label>
+                <input
+                  type="password"
+                  required
+                  onChange={(event) => {
+                    setFormValues({
+                      ...formValues,
+                      password: event.target.value,
+                    });
+                  }}
+                />
+              </div>
+              <div className="label-input-container">
+                <label>Confirm Password:</label>
+                <input
+                  type="password"
+                  required
+                  onChange={(event) => {
+                    setConfirmPassword(event.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <button>
+              <h4>Sign-Up</h4>
+            </button>
+            <p>
+              Already Have An Account? <a href="/login">Login Here</a>
+            </p>
+            <Error error={error} />
+          </div>
         </div>
-      </div>
+      )}
     </form>
   );
 }
