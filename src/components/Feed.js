@@ -31,11 +31,20 @@ function Feed() {
     id: "",
     scripture: [],
   });
-
   const [active, setActive] = useState(false);
 
   const toggleActive = () => {
     setActive(!active);
+  };
+
+  const handleDeletePrompt = (id) => {
+    return (
+      <div className={active ? "confirm-delete" : "confirm-delete-none"}>
+        <div>Do you want to delete this answer?</div>
+        <button onClick={() => handleDelete(0, "answer")}>YES</button>
+        <button>NO</button>
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -97,13 +106,6 @@ function Feed() {
                   }
                   onClick={() => toggleActive()}
                 />
-              </div>
-              <div
-                className={active ? "confirm-delete" : "confirm-delete-none"}
-              >
-                <div>Are you sure you want to delete this?</div>
-                <button onClick={() => handleDelete(0, "answer")}>YES</button>
-                <button>NO</button>
               </div>
             </div>
           );
@@ -219,9 +221,20 @@ function Feed() {
           </button>
         </form>
         {mapPost}
+        {handleDeletePrompt()}
       </div>
     </div>
   );
 }
 
 export default Feed;
+
+/*
+ <div
+                className={active ? "confirm-delete" : "confirm-delete-none"}
+              >
+                <div>Are you sure you want to delete this?</div>
+                <button onClick={() => handleDelete(0, "answer")}>YES</button>
+                <button>NO</button>
+              </div>
+*/
