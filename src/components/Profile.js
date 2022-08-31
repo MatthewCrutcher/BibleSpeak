@@ -16,6 +16,23 @@ function Profile() {
   const [postInDB, setPostInDB] = useState([]);
   const [answerInDB, setAnswerInDB] = useState([]);
   const [loggedIn, setLoggedIn] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(0);
+  const [activeAnswer, setActiveAnswer] = useState(false);
+  const [activePost, setActivePost] = useState(false);
+
+  const toggleActiveAnswer = () => setActiveAnswer(!activeAnswer);
+
+  const toggleActivePost = () => setActivePost(!activePost);
+
+  const handleDeleteAnswerPrompt = (deleteID) => {
+    setConfirmDelete(deleteID);
+    setActiveAnswer(!activeAnswer);
+  };
+
+  const handleDeletePostPrompt = (deleteID) => {
+    setConfirmDelete(deleteID);
+    setActivePost(!activePost);
+  };
 
   useEffect(() => {
     const postApiCall = async () => {
@@ -52,19 +69,19 @@ function Profile() {
 
   const handlePostDelete = (id) => {
     post.delete(`/post/${id}`).then((res) => {
-      console.log(res);
       answerInDB.map((val) => {
         if (val.postId === id) {
           answer.delete(`/answer/${val.id}`).then((response) => {});
         }
         return null;
       });
+      window.location.reload();
     });
   };
 
   const handleDelete = (id, url) => {
     post.delete(`/${url}/${id}`).then((res) => {
-      console.log(res);
+      window.location.reload();
     });
 
     return null;
@@ -100,7 +117,7 @@ function Profile() {
                       ? "remove-answer"
                       : "remove-post-none"
                   }
-                  onClick={() => handleDelete(value.id, "answer")}
+                  onClick={() => handleDeleteAnswerPrompt(value.id)}
                 />
               </div>
             );
@@ -122,14 +139,11 @@ function Profile() {
                   alt="Remove Post"
                   className="remove-post"
                   onClick={() => {
-                    handlePostDelete(val.id);
+                    handleDeletePostPrompt(val.id);
                   }}
                 />
               </div>
-              <button
-                className="answer-button"
-                onClick={() => handleAnswer(val.id)}
-              >
+              <button className="answer-button" onClick={() => handleAnswer()}>
                 <h4>Answer</h4>
               </button>
             </div>
@@ -180,6 +194,48 @@ function Profile() {
         <Navbar />
         <div className="profile-container">
           <h2 className="questions-asked-header">Questions You Have Asked</h2>
+          <div
+            className={
+              activeAnswer ? "confirm-delete-container" : "confirm-delete-none"
+            }
+          >
+            <div className="confirm-delete-content">
+              <h3>Do you want to delete this answer?</h3>
+              <button
+                className="confirm-delete-yesButton"
+                onClick={() => handleDelete(confirmDelete, "answer")}
+              >
+                YES
+              </button>
+              <button
+                className="confirm-delete-noButton"
+                onClick={() => toggleActiveAnswer()}
+              >
+                NO
+              </button>
+            </div>
+          </div>
+          <div
+            className={
+              activePost ? "confirm-delete-container" : "confirm-delete-none"
+            }
+          >
+            <div className="confirm-delete-content">
+              <h3>Do you want to delete this post?</h3>
+              <button
+                className="confirm-delete-yesButton"
+                onClick={() => handlePostDelete(confirmDelete)}
+              >
+                YES
+              </button>
+              <button
+                className="confirm-delete-noButton"
+                onClick={() => toggleActivePost()}
+              >
+                NO
+              </button>
+            </div>
+          </div>
           {mapPost}
         </div>
       </div>

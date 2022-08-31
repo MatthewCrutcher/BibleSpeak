@@ -26,24 +26,22 @@ function Feed() {
   const [postInDB, setPostInDB] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(null);
-  const [confirmDelete, setConfirmDelete] = useState({
-    active: false,
-    id: "3d621f76-fb4d-4c9d-8f6e-76b2d357fbb4",
-  });
+  const [confirmDelete, setConfirmDelete] = useState(0);
+  const [activeAnswer, setActiveAnswer] = useState(false);
+  const [activePost, setActivePost] = useState(false);
 
-  const [active, setActive] = useState(false);
+  const toggleActiveAnswer = () => setActiveAnswer(!activeAnswer);
 
-  const toggleActive = () => {
-    setActive(!active);
+  const toggleActivePost = () => setActivePost(!activePost);
+
+  const handleDeleteAnswerPrompt = (deleteID) => {
+    setConfirmDelete(deleteID);
+    setActiveAnswer(!activeAnswer);
   };
 
-  const handleDeletePrompt = (deleteID) => {
-    setConfirmDelete({
-      ...confirmDelete,
-      id: deleteID,
-    });
-    setActive(!active);
-    console.log(confirmDelete.id);
+  const handleDeletePostPrompt = (deleteID) => {
+    setConfirmDelete(deleteID);
+    setActivePost(!activePost);
   };
 
   useEffect(() => {
@@ -103,7 +101,7 @@ function Feed() {
                       ? "remove-answer"
                       : "remove-post-none"
                   }
-                  onClick={() => handleDeletePrompt(value.id)}
+                  onClick={() => handleDeleteAnswerPrompt(value.id)}
                 />
               </div>
             </div>
@@ -134,7 +132,7 @@ function Feed() {
                 className={
                   loggedIn === val.userId ? "remove-post" : "remove-post-none"
                 }
-                onClick={() => handlePostDelete(val.id)}
+                onClick={() => handleDeletePostPrompt(val.id)}
               />
             </div>
             <button className="answer-button" onClick={() => handleAnswer()}>
@@ -173,8 +171,8 @@ function Feed() {
   const handleDelete = (id, url) => {
     post.delete(`/${url}/${id}`).then((res) => {
       console.log(res);
+      window.location.reload();
     });
-    window.location.reload();
   };
 
   const handleQuestion = (event) => {
@@ -218,14 +216,49 @@ function Feed() {
             <h4>Post</h4>
           </button>
         </form>
-        {mapPost}
-        <div className={active ? "confirm-delete" : "confirm-delete-none"}>
-          <div>Do you want to delete this answer?</div>
-          <button onClick={() => handleDelete(confirmDelete.id, "answer")}>
-            YES
-          </button>
-          <button>NO</button>
+        <div
+          className={
+            activeAnswer ? "confirm-delete-container" : "confirm-delete-none"
+          }
+        >
+          <div className="confirm-delete-content">
+            <h3>Do you want to delete this answer?</h3>
+            <button
+              className="confirm-delete-yesButton"
+              onClick={() => handleDelete(confirmDelete, "answer")}
+            >
+              YES
+            </button>
+            <button
+              className="confirm-delete-noButton"
+              onClick={() => toggleActiveAnswer()}
+            >
+              NO
+            </button>
+          </div>
         </div>
+        <div
+          className={
+            activePost ? "confirm-delete-container" : "confirm-delete-none"
+          }
+        >
+          <div className="confirm-delete-content">
+            <h3>Do you want to delete this post?</h3>
+            <button
+              className="confirm-delete-yesButton"
+              onClick={() => handlePostDelete(confirmDelete)}
+            >
+              YES
+            </button>
+            <button
+              className="confirm-delete-noButton"
+              onClick={() => toggleActivePost()}
+            >
+              NO
+            </button>
+          </div>
+        </div>
+        {mapPost}
       </div>
     </div>
   );
